@@ -13,6 +13,7 @@ export const Post = (props:PostType) => {
             <div>
                 <span>Like</span> - {props.likesCount}
             </div>
+            <div></div>
         </div>
     )
 }
