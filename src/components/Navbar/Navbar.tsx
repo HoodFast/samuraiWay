@@ -5,11 +5,11 @@ import s from './Navbar.module.css'
 export const Navbar = () => {
     return (
         <nav className={s.nav}>
-            <div className={`${s.item} ${s.activ}`}><a>Profile</a></div>
-            <div className={s.item}><a>Messages</a></div>
-            <div className={s.item}><a>News</a></div>
-            <div className={s.item}><a>Music</a></div>
-            <div className={s.item}><a>Settings</a></div>
+            <div className={`${s.item} ${s.activ}`}><a href="/profile">Profile</a></div>
+            <div className={s.item}><a href="/dialog">Messages</a></div>
+            <div className={s.item}><a href="/news">News</a></div>
+            <div className={s.item}><a href="/music">Music</a></div>
+            <div className={s.item}><a href="/settings">Settings</a></div>
         </nav>
     )
 }
