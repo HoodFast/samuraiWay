@@ -5,8 +5,8 @@ import {Post} from "./Post/Post";
 
 export const MyPosts = () => {
     return (
-        <div>
-            My posts
+        <div className={s.postsBlock}>
+            <h3>My posts</h3>
             <div>
                 <textarea></textarea>
                 <div>

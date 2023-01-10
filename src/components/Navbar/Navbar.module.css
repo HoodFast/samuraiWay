@@ -5,8 +5,10 @@
 
 .item {
     color: white;
+    text-decoration: none;
 }
 
-.item.activ {
+.item a.active {
     color: gold;
+    text-decoration: none;
 }
