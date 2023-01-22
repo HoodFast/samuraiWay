@@ -1,15 +1,13 @@
 import React from "react";
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
+import {postsPropsType} from "../Profile";
 
 
-export const MyPosts = () => {
-    const postData=[
-        {id:1,message:"hi are you", likesCount:12},
-        {id:1,message:"is my post", likesCount:1},
-        {id:1,message:"hellow world", likesCount:5},
-    ]
 
+
+export const MyPosts = (props:postsPropsType) => {
+    const postElements = props.posts.map(p=><Post key={p.id} message={p.message} likesCount={p.likesCount}/>)
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
@@ -21,9 +19,7 @@ export const MyPosts = () => {
                 </div>
             </div>
             <div className={s.posts}>
-                {postData.map(d=><Post message={d.message} likesCount={d.likesCount}/>)}
-                {/*<Post message={postData[0].message} likesCount={12}/>*/}
-                {/*<Post message="is my post" likesCount={3}/>*/}
+                {postElements}
             </div>
         </div>
     )
