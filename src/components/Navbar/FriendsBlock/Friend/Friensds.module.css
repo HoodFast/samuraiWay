@@ -1,0 +1,12 @@
+
+.avatarStyle {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    margin: 5px;
+}
+
+.avatarStyle img {
+    width: 50px;
+    border-radius: 30px;
+}
