@@ -12,7 +12,7 @@ export const FriendsBlock = (props: FriendsBlockType) => {
     return (
         <div className={s.friendsPosition}>
             <div>
-                <h2>Friends</h2>
+                <h2>MyFriends</h2>
             </div>
             <div className={s.friendsBlock}>
                 {friendBlocks}
