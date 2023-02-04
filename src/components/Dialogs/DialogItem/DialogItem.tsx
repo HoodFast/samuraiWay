@@ -2,7 +2,7 @@ import s from "../Dialogs.module.css";
 import {NavLink} from "react-router-dom";
 
 type PropsDialogType = {
-    id: number
+    id: string
     name: string
 }
 

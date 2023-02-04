@@ -13,6 +13,7 @@ import {stateType} from "./Redux/state";
 
 export type dialogsAppPropsType ={
     state:stateType
+    addPost:(post:string)=>void
 }
 
 
@@ -29,7 +30,7 @@ const App = (props:dialogsAppPropsType) => {
                         state={props.state.dialogsPage}
 
                     />}/>
-                    <Route path="/profile" element={<Profile state={props.state.profilePage}/>}/>
+                    <Route path="/profile" element={<Profile addPost={props.addPost} state={props.state.profilePage}/>}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/settings" element={<Settings/>}/>
