@@ -57,7 +57,6 @@ export let state: stateType = {
             {id: v1(), message: "is my post", likesCount: 1},
             {id: v1(), message: "hellow world", likesCount: 5},
         ],
-
     },
     dialogsPage: {
         messages: [
