@@ -50,7 +50,6 @@ export let state: stateType = {
             {id:v1(), friendsName:"Fill", avatar:'https://abrakadabra.fun/uploads/posts/2021-12/thumbs/1639946157_16-abrakadabra-fun-p-prikolnie-avi-v-standoff-16.jpg'},
         ]
     },
-
     profilePage: {
         posts: [
             {id: v1(), message: "hi are you", likesCount: 12},

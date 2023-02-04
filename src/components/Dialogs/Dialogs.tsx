@@ -13,11 +13,6 @@ type dialogsPropsType ={
     messages:Array<messageType>
 }
 
-
-
-
-
-
 export const Dialogs = (props:dialogsPropsStateType) => {
     const[message,setMessage]=useState('')
     const textAreaHandler=(e:ChangeEvent<HTMLTextAreaElement>)=>{
