@@ -4,21 +4,23 @@ import {Post} from "./Post/Post";
 import {postType} from "../../../App";
 
 
-
 type MyPostPropsType = {
     posts: Array<postType>
-    newPostText:string
-    dispatch:any
+    newPostText: string
+    dispatch: any
 }
 
 export const MyPosts = (props: MyPostPropsType) => {
     const postElements = props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>)
-    const textAreaHandler= (e:ChangeEvent<HTMLTextAreaElement>)=>{
-        props.updateNewPostText(e.currentTarget.value)
+    const textAreaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        // props.updateNewPostText(e.currentTarget.value)
+
+        let action = {type: 'UPDATE-NEW-POST-TEXT', newText: e.currentTarget.value};
+        props.dispatch(action)
     }
-const addPost=()=>{
-    props.dispatch()
-}
+    const addPost = () => {
+        props.dispatch({type: 'ADD-POST'})
+    }
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
