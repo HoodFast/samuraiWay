@@ -9,15 +9,36 @@ import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 
-import {stateType} from "./Redux/state";
+import {dialogType, messageType, navbarBlockType} from "./Redux/state";
 
-export type dialogsAppPropsType ={
+export type AppPropsType ={
     state:stateType
-    addPost:(post:string)=>void
+    dispatch:any
+
+}
+export type stateType = {
+    sidebar:navbarBlockType
+    profilePage: profilePageType
+    dialogsPage: dialogsPageType
+}
+export type profilePageType = {
+    posts: Array<postType>
+    newPostText:string
+
+}
+type dialogsPageType={
+    messages:Array<messageType>
+    dialogs: Array<dialogType>
+}
+
+export type postType={
+    id: string
+    message:string
+    likesCount:number
 }
 
 
-const App = (props:dialogsAppPropsType) => {
+const App = (props:AppPropsType) => {
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
@@ -30,7 +51,7 @@ const App = (props:dialogsAppPropsType) => {
                         state={props.state.dialogsPage}
 
                     />}/>
-                    <Route path="/profile" element={<Profile addPost={props.addPost} state={props.state.profilePage}/>}/>
+                    <Route path="/profile" element={<Profile dispatch={props.dispatch} profilePage={props.state.profilePage} />}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/settings" element={<Settings/>}/>
