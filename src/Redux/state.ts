@@ -1,7 +1,9 @@
 import {v1} from "uuid";
 
-
-
+const ADD_POST='ADD-POST'
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
+const SEND_MESSAGE = 'ADD-MESSAGE'
 export type messageType = {
     id: string
     message: string
@@ -50,7 +52,7 @@ export const store = {
                 {id: v1(), message: "is my post", likesCount: 1},
                 {id: v1(), message: "hellow world", likesCount: 5},
             ],
-            newPostText: "It-kama"
+            newPostText: ""
         },
         dialogsPage: {
             messages: [
@@ -58,6 +60,7 @@ export const store = {
                 {id: v1(), message: "Hellow"},
                 {id: v1(), message: "How are you?"},
             ],
+            newMessageBody: "",
             dialogs: [
                 {id: v1(), name: "Vitalya"},
                 {id: v1(), name: "Dron"},
@@ -76,7 +79,7 @@ export const store = {
     },
 
     dispatch(action:any) {
-        if(action.type === 'ADD-POST') {
+        if(action.type === ADD_POST) {
             let newPostText = this._state.profilePage.newPostText
             if (newPostText.trim().length === 0) {
                 return
@@ -85,12 +88,26 @@ export const store = {
             this._state.profilePage.posts.push(newPost);
             this._callSubscriber();
             this._state.profilePage.newPostText = ""
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
             this._state.profilePage.newPostText = action.newText;
             this._callSubscriber();
+        } else if (action.type === UPDATE_NEW_MESSAGE_BODY){
+            this._state.dialogsPage.newMessageBody = action.newMessageBody;
+            this._callSubscriber();
+        }else if (action.type === SEND_MESSAGE){
+            this._state.dialogsPage.messages.push({id: v1(), message: this._state.dialogsPage.newMessageBody})
+            this._callSubscriber();
+            this._state.dialogsPage.newMessageBody = ''
         }
     }
 
 }
+
+export const addPostActionCreator= ()=>({type: ADD_POST})
+export const updateNewPostTextCreator = (text:string)=>({type: UPDATE_NEW_POST_TEXT, newText: text})
+
+export const updateNewMessageTextCreator = (text:string)=>({type:UPDATE_NEW_MESSAGE_BODY,newMessageBody:text })
+export const addNewMessageTextCreator = ()=>({type: ADD_MESSAGE})
+
 
 

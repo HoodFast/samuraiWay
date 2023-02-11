@@ -26,9 +26,10 @@ export type profilePageType = {
     newPostText:string
 
 }
-type dialogsPageType={
+export type dialogsPageType={
     messages:Array<messageType>
-    dialogs: Array<dialogType>
+    newMessageBody:string
+    dialogs:Array<dialogType>
 }
 
 export type postType={
@@ -49,6 +50,7 @@ const App = (props:AppPropsType) => {
                     <Routes>
                     <Route path="/dialogs/*" element={<Dialogs
                         state={props.state.dialogsPage}
+                        dispatch={props.dispatch}
 
                     />}/>
                     <Route path="/profile" element={<Profile dispatch={props.dispatch} profilePage={props.state.profilePage} />}/>
