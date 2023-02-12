@@ -78,6 +78,7 @@ export const store = {
         this._callSubscriber = observer
     },
 
+
     dispatch(action:any) {
         if(action.type === ADD_POST) {
             let newPostText = this._state.profilePage.newPostText
