@@ -15,6 +15,7 @@ export const rerenderEntreThree = (state:stateType) => {
     );
 }
 
+
 const state=store.getState()
 rerenderEntreThree(state);
 store.subscribe(()=>rerenderEntreThree(state));

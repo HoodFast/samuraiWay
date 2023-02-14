@@ -1,13 +1,10 @@
 import s from './Dialogs.module.css'
 import {Message} from "./Message/Message";
 import {DialogItem} from "./DialogItem/DialogItem";
-import {
-    addNewMessageTextCreator,
 
-    updateNewMessageTextCreator,
-} from "../../Redux/state";
 import {ChangeEvent} from "react";
 import {dialogsPageType} from "../../App";
+import {addNewMessageTextCreator, updateNewMessageTextCreator} from "../../Redux/dialogs-reducer";
 
 
 

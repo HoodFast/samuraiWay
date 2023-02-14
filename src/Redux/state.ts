@@ -1,6 +1,9 @@
 import {v1} from "uuid";
+import {profileReducer} from "./profile-reducer";
+import {dialogsReducer} from "./dialogs-reducer";
+import {sidebarReducer} from "./sidebar-reducer";
 
-const ADD_POST='ADD-POST'
+const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
 const SEND_MESSAGE = 'ADD-MESSAGE'
@@ -13,7 +16,14 @@ export type dialogType = {
     id: string
     name: string
 }
-
+export type sidebarType = {
+    friends:Array<FriendsType>
+}
+export type FriendsType = {
+    id:string
+    friendsName:string
+    avatar:string
+}
 
 export type navbarType = {
     id: string
@@ -79,36 +89,17 @@ export const store = {
     },
 
 
-    dispatch(action:any) {
-        if(action.type === ADD_POST) {
-            let newPostText = this._state.profilePage.newPostText
-            if (newPostText.trim().length === 0) {
-                return
-            }
-            let newPost = {id: v1(), message: newPostText, likesCount: 0}
-            this._state.profilePage.posts.push(newPost);
-            this._callSubscriber();
-            this._state.profilePage.newPostText = ""
-        } else if (action.type === UPDATE_NEW_POST_TEXT) {
-            this._state.profilePage.newPostText = action.newText;
-            this._callSubscriber();
-        } else if (action.type === UPDATE_NEW_MESSAGE_BODY){
-            this._state.dialogsPage.newMessageBody = action.newMessageBody;
-            this._callSubscriber();
-        }else if (action.type === SEND_MESSAGE){
-            this._state.dialogsPage.messages.push({id: v1(), message: this._state.dialogsPage.newMessageBody})
-            this._callSubscriber();
-            this._state.dialogsPage.newMessageBody = ''
-        }
+    dispatch(action: any) {
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._state.sidebar = sidebarReducer(this._state.sidebar)
+        this._callSubscriber();
     }
 
 }
 
-export const addPostActionCreator= ()=>({type: ADD_POST})
-export const updateNewPostTextCreator = (text:string)=>({type: UPDATE_NEW_POST_TEXT, newText: text})
 
-export const updateNewMessageTextCreator = (text:string)=>({type:UPDATE_NEW_MESSAGE_BODY,newMessageBody:text })
-export const addNewMessageTextCreator = ()=>({type: ADD_MESSAGE})
+
 
 
 
