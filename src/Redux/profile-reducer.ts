@@ -4,8 +4,16 @@ import {profilePageType} from "../App";
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
+let init:profilePageType = {
+    posts: [
+        {id: v1(), message: "hi are you", likesCount: 12},
+        {id: v1(), message: "is my post", likesCount: 1},
+        {id: v1(), message: "hellow world", likesCount: 5},
+    ],
+    newPostText: ""
+}
 
-export const profileReducer = (state: any, action: any) => {
+export const profileReducer = (state=init, action: any) => {
     switch (action.type) {
         case ADD_POST:
             let newPostText = state.newPostText

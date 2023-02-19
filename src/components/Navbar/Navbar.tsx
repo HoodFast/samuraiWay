@@ -1,7 +1,7 @@
 import React from "react";
 import s from './Navbar.module.css'
 import {NavLink} from "react-router-dom";
-import {navbarBlockType} from "../../Redux/state";
+import {navbarBlockType} from "../../Redux/store";
 import {FriendsBlock} from "./FriendsBlock/FriendsBlock";
 
 type navbarPropsType = {
@@ -9,6 +9,7 @@ type navbarPropsType = {
 }
 
 export const Navbar = (props: navbarPropsType) => {
+    debugger
     return (
         <>
             <nav className={s.nav}>

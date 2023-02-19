@@ -1,10 +1,10 @@
 import React from 'react';
 import reportWebVitals from './reportWebVitals';
-import {store} from "./Redux/state";
+import {store} from "./Redux/redux-store";
 import App, {stateType} from "./App";
 import ReactDOM from "react-dom/client";
 
-export const rerenderEntreThree = (state:stateType) => {
+export const rerenderEntreThree = (state:any) => {
     const root = ReactDOM.createRoot(
         document.getElementById('root') as HTMLElement
     );
@@ -17,6 +17,7 @@ export const rerenderEntreThree = (state:stateType) => {
 
 
 const state=store.getState()
+debugger
 rerenderEntreThree(state);
 store.subscribe(()=>rerenderEntreThree(state));
 

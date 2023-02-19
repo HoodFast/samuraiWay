@@ -1,4 +1,4 @@
-import {navbarType} from "../../../../Redux/state";
+import {navbarType} from "../../../../Redux/store";
 import s from "./Friensds.module.css"
 
 export const Friend = (props: navbarType) => {
