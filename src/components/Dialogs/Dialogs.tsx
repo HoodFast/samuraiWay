@@ -9,22 +9,27 @@ import {addNewMessageTextCreator, updateNewMessageTextCreator} from "../../Redux
 
 
 type dialogsPropsStateType ={
-    state:dialogsPageType
-    dispatch: any
+    updateNewMessageBody:(body:string)=>void
+    addNewMessageText:()=>void
+    dialogsPage:dialogsPageType
 }
 
 
 export const Dialogs = (props:dialogsPropsStateType) => {
 
     const textAreaHandler=(e:ChangeEvent<HTMLTextAreaElement>)=>{
-        let action = updateNewMessageTextCreator(e.currentTarget.value)
-        props.dispatch(action)
+        props.updateNewMessageBody(e.currentTarget.value)
+        // let action = updateNewMessageTextCreator(e.currentTarget.value)
+        // props.dispatch(action)
     }
     const sendHandler = ()=>{
-        props.dispatch(addNewMessageTextCreator())
+        props.addNewMessageText();
+        // props.dispatch(addNewMessageTextCreator())
     }
-    const dialogsDataMap = props.state.dialogs.map(dialog => <DialogItem key={dialog.id} name={dialog.name} id={dialog.id}/>)
-    const messageDataMap = props.state.messages.map(message => <Message key={message.id} message={message.message}/>)
+
+    let state=props.dialogsPage
+    const dialogsDataMap = state.dialogs.map(dialog => <DialogItem key={dialog.id} name={dialog.name} id={dialog.id}/>)
+    const messageDataMap = state.messages.map(message => <Message key={message.id} message={message.message}/>)
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
@@ -33,7 +38,7 @@ export const Dialogs = (props:dialogsPropsStateType) => {
             <div className={s.messages}>
                 {messageDataMap}
             </div>
-            <textarea value={props.state.newMessageBody} onChange={textAreaHandler} autoFocus/>
+            <textarea value={state.newMessageBody} onChange={textAreaHandler} autoFocus/>
             <button onClick={sendHandler}>send</button>
         </div>
     )

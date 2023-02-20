@@ -8,8 +8,9 @@ import {addPostActionCreator, updateNewPostTextCreator} from "../../../Redux/pro
 
 type MyPostPropsType = {
     posts: Array<postType>
-    newPostText: string
-    dispatch: any
+    newPostText:string
+    updateNewPostText: (text:string)=>void
+    addPost: ()=>void
 }
 
 
@@ -17,11 +18,12 @@ type MyPostPropsType = {
 export const MyPosts = (props: MyPostPropsType) => {
     const postElements = props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>)
     const textAreaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let action = updateNewPostTextCreator(e.currentTarget.value);
-        props.dispatch(action)
+        let text = e.currentTarget.value
+        props.updateNewPostText(text)
     }
     const addPost = () => {
-        props.dispatch(addPostActionCreator())
+        props.addPost()
+
     }
 
     return (

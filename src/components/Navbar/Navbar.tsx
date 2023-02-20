@@ -5,11 +5,11 @@ import {navbarBlockType} from "../../Redux/store";
 import {FriendsBlock} from "./FriendsBlock/FriendsBlock";
 
 type navbarPropsType = {
-    state: navbarBlockType
+    store: navbarBlockType
 }
 
 export const Navbar = (props: navbarPropsType) => {
-    debugger
+
     return (
         <>
             <nav className={s.nav}>
@@ -25,7 +25,7 @@ export const Navbar = (props: navbarPropsType) => {
                 <div className={s.item}><NavLink className={navData => navData.isActive ? s.active : s.item}
                                                  to="/settings">Settings</NavLink></div>
 
-                <FriendsBlock friends={props.state.friends}/>
+                <FriendsBlock friends={props.store.friends}/>
             </nav>
 
 

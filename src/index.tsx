@@ -4,20 +4,20 @@ import {store} from "./Redux/redux-store";
 import App, {stateType} from "./App";
 import ReactDOM from "react-dom/client";
 
-export const rerenderEntreThree = (state:any) => {
+export const rerenderEntreThree = (state:stateType) => {
     const root = ReactDOM.createRoot(
         document.getElementById('root') as HTMLElement
     );
     root.render(
         <React.StrictMode>
-            <App dispatch={store.dispatch.bind(store)} state={state}/>
+            <App dispatch={store.dispatch.bind(store)} store={store}/>
         </React.StrictMode>
     );
 }
 
 
 const state=store.getState()
-debugger
+
 rerenderEntreThree(state);
 store.subscribe(()=>rerenderEntreThree(state));
 
