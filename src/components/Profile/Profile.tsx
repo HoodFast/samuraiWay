@@ -9,18 +9,16 @@ import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 
 
 
-type PropsProfileType = {
-    dispatch: any
-    store:any
-}
+// type PropsProfileType = {
+//     dispatch: any
+//     store:any
+// }
 
-export const Profile = (props: PropsProfileType) => {
+export const Profile = () => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPostsContainer
-                store={props.store}
-            />
+            <MyPostsContainer/>
         </div>
     )
 }
