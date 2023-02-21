@@ -48,6 +48,7 @@ const App = () => {
                 <Header/>
                 {/*<NavbarContainer />*/}
 
+
                 <div className={'app-wrapper-content'}>
                     <Routes>
                     {/*<Route path="/dialogs/*" element={<DialogsContainer />}/>*/}
