@@ -3,7 +3,7 @@ import reportWebVitals from './reportWebVitals';
 import {store} from "./Redux/redux-store";
 import App, {stateType} from "./App";
 import ReactDOM from "react-dom/client";
-import {StoreContext} from './storeContext';
+import {Provider, StoreContext} from './storeContext';
 
 export const rerenderEntreThree = (state: stateType) => {
     const root = ReactDOM.createRoot(
@@ -11,9 +11,9 @@ export const rerenderEntreThree = (state: stateType) => {
     );
     root.render(
         <React.StrictMode>
-            <StoreContext.Provider value={store}>
+            <Provider store={store}>
                 <App />
-            </StoreContext.Provider>
+            </Provider>
 
         </React.StrictMode>
     );
