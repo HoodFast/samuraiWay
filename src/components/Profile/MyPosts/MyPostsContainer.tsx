@@ -26,7 +26,12 @@ export const MyPostsContainer = () => {
                 const addPost = () => {
                     store.dispatch(addPostActionCreator())
                 }
-                return <MyPosts posts={state.profilePage.posts} newPostText={state.profilePage.newPostText} updateNewPostText={updateNewPostText} addPost={addPost}/>
+                return <MyPosts
+                    posts={state.profilePage.posts}
+                    newPostText={state.profilePage.newPostText}
+                    updateNewPostText={updateNewPostText}
+                    addPost={addPost}
+                />
             }}
         </StoreContext.Consumer>
 

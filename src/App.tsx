@@ -46,12 +46,12 @@ const App = () => {
         <BrowserRouter>
             <div className='app-wrapper'>
                 <Header/>
-                {/*<NavbarContainer />*/}
+                <NavbarContainer />
 
 
                 <div className={'app-wrapper-content'}>
                     <Routes>
-                    {/*<Route path="/dialogs/*" element={<DialogsContainer />}/>*/}
+                    <Route path="/dialogs/*" element={<DialogsContainer />}/>
                     <Route path="/profile" element={<Profile  />}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
