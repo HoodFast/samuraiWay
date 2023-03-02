@@ -8,28 +8,31 @@ let init:profilePageType = {
     posts: [
         {id: v1(), message: "hi are you", likesCount: 12},
         {id: v1(), message: "is my post", likesCount: 1},
-        {id: v1(), message: "hellow world", likesCount: 5},
+        {id: v1(), message: "hello world", likesCount: 5},
     ],
     newPostText: ""
 }
 
-export const profileReducer = (state=init, action: any) => {
+export const profileReducer = (state=init, action: mainType) => {
+    debugger
     switch (action.type) {
         case ADD_POST:
-            let newPostText = state.newPostText
-
-            let newPost = {id: v1(), message: newPostText, likesCount: 0}
-            state.posts.push(newPost);
+            let newPost = {id: v1(), message: state.newPostText, likesCount: 0}
             state.newPostText = ""
-            return state
+            return {...state,posts:[...state.posts,newPost]}
         case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.newText;
-            return state
+            return {...state,newPostText:action.newText}
         default:
             return state
     }
 }
 
+type mainType = addPostActionCreatorType | updateNewPostTextCreatorType
 
-export const addPostActionCreator = () => ({type: ADD_POST})
-export const updateNewPostTextCreator = (text: string) => ({type: UPDATE_NEW_POST_TEXT, newText: text})
+type addPostActionCreatorType=ReturnType<typeof addPostActionCreator>
+type updateNewPostTextCreatorType=ReturnType<typeof updateNewPostTextCreator>
+
+
+
+export const addPostActionCreator = () => ({type: ADD_POST}as const)
+export const updateNewPostTextCreator = (text: string) => ({type: UPDATE_NEW_POST_TEXT, newText: text}as const)

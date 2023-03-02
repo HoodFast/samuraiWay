@@ -31,7 +31,7 @@ export const MyPosts = (props: MyPostPropsType) => {
             <h3>My posts</h3>
             <div></div>
             <div>
-                <textarea value={props.newPostText} onChange={textAreaHandler} autoFocus></textarea>
+                <textarea value={props.newPostText} onChange={textAreaHandler}></textarea>
                 <div>
                     <button onClick={addPost}>Add post</button>
                 </div>

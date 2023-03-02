@@ -19,12 +19,9 @@ export const Dialogs = (props:dialogsPropsStateType) => {
 
     const textAreaHandler=(e:ChangeEvent<HTMLTextAreaElement>)=>{
         props.updateNewMessageBody(e.currentTarget.value)
-        // let action = updateNewMessageTextCreator(e.currentTarget.value)
-        // props.dispatch(action)
     }
     const sendHandler = ()=>{
         props.addNewMessageText();
-        // props.dispatch(addNewMessageTextCreator())
     }
 
     let state=props.dialogsPage
@@ -38,7 +35,7 @@ export const Dialogs = (props:dialogsPropsStateType) => {
             <div className={s.messages}>
                 {messageDataMap}
             </div>
-            <textarea value={state.newMessageBody} onChange={textAreaHandler} autoFocus/>
+            <textarea value={state.newMessageBody} onChange={textAreaHandler}/>
             <button onClick={sendHandler}>send</button>
         </div>
     )

@@ -1,22 +1,32 @@
 import React from "react";
-import s from './Navbar.module.css'
-import {NavLink} from "react-router-dom";
-import {navbarBlockType} from "../../Redux/store";
-import {FriendsBlock} from "./FriendsBlock/FriendsBlock";
+
 import {Navbar} from "./Navbar";
-import { StoreContext } from "../../storeContext";
+
+
+import {connect} from "react-redux";
+
 
 // type navbarPropsType = {
 //     store: any
 // }
 
-export const NavbarContainer = () => {
-// let state = props.store.getState().sidebar
-    return (
-        <StoreContext.Consumer>{(store)=>{
-            let state = store.getState().sidebar
-            return <Navbar store={state}/>
-        }}
-            </StoreContext.Consumer>
-    )
+//  const avbarContainer = () => {
+// // let state = props.store.getState().sidebar
+//     return (
+//         <StoreContext.Consumer>{(store)=>{
+//             let state = store.getState().sidebar
+//             return <Navbar store={state}/>
+//         }}
+//             </StoreContext.Consumer>
+//     )
+// }
+
+const mapStateToProps=(state)=>{
+    return{
+        store: state.sidebar,
+
+    }
 }
+
+
+export const NavbarContainer = connect(mapStateToProps) (Navbar);
