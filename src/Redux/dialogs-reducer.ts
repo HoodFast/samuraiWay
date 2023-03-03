@@ -1,5 +1,6 @@
 import {v1} from "uuid";
 import {dialogsPageType} from "../App";
+import {addPostActionCreator, updateNewPostTextCreator} from "./profile-reducer";
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
 const SEND_MESSAGE = 'ADD-MESSAGE'
@@ -18,7 +19,7 @@ let init:dialogsPageType = {
     ],
 }
 
-export const dialogsReducer = (state = init, action: any
+export const dialogsReducer = (state = init, action: mainType
 ) =>
 {
     switch (action.type) {
@@ -33,5 +34,13 @@ export const dialogsReducer = (state = init, action: any
     }
 }
 
-export const updateNewMessageTextCreator = (text: string) => ({type: UPDATE_NEW_MESSAGE_BODY, newMessageBody: text})
-export const addNewMessageTextCreator = () => ({type: SEND_MESSAGE})
+
+type mainType = addNewMessageTextType | updateNewMessageCreatorType
+
+type addNewMessageTextType=ReturnType<typeof addNewMessageTextCreator>
+type updateNewMessageCreatorType=ReturnType<typeof updateNewMessageTextCreator>
+
+
+
+export const updateNewMessageTextCreator = (text: string) => ({type: UPDATE_NEW_MESSAGE_BODY, newMessageBody: text}as const)
+export const addNewMessageTextCreator = () => ({type: SEND_MESSAGE}as const)
