@@ -11,5 +11,7 @@ let redusers = combineReducers({
     usersPage:userReducer
 });
 
+export type AppStateType = ReturnType<typeof redusers>
+
 export let store = createStore(redusers);
 

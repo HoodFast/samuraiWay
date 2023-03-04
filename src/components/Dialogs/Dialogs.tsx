@@ -4,7 +4,7 @@ import {DialogItem} from "./DialogItem/DialogItem";
 
 import {ChangeEvent} from "react";
 import {dialogsPageType} from "../../App";
-import {addNewMessageTextCreator, updateNewMessageTextCreator} from "../../Redux/dialogs-reducer";
+
 
 
 
