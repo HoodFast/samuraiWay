@@ -24,6 +24,8 @@ export const Navbar = (props: navbarPropsType) => {
                                                  to="/music">Music</NavLink></div>
                 <div className={s.item}><NavLink className={navData => navData.isActive ? s.active : s.item}
                                                  to="/settings">Settings</NavLink></div>
+                <div className={s.item}><NavLink className={navData => navData.isActive ? s.active : s.item}
+                                                 to="/users">Users</NavLink></div>
 
                 <FriendsBlock friends={props.store.friends}/>
             </nav>
