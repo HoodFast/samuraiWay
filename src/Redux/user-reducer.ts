@@ -6,19 +6,7 @@ const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET-USERS'
 
-// type locationType = {
-//     city:string
-//     country:string
-// }
 
-// type userType = {
-//     id:string
-//     photoUrl:string
-//     followed:boolean
-//     fullName:string
-//     status:string
-//     location: locationType
-// }
 type userPageType = {
     users: propsUsersType[]
 }

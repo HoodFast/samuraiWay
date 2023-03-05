@@ -1,25 +1,36 @@
 import {v1} from "uuid";
 import {dialogsPageType} from "../App";
-import {addPostActionCreator, updateNewPostTextCreator} from "./profile-reducer";
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
 const SEND_MESSAGE = 'ADD-MESSAGE'
 
-let init:dialogsPageType = {
+type messageType = {
+    id: string
+    message: string
+}
+
+type dialogType = {
+    id: string
+    name: string
+}
+
+let init = {
     messages: [
         {id: v1(), message: "Hi"},
         {id: v1(), message: "Hellow"},
         {id: v1(), message: "How are you?"},
-    ],
+    ] as messageType[],
     newMessageBody: "",
     dialogs: [
         {id: v1(), name: "Vitalya"},
         {id: v1(), name: "Dron"},
         {id: v1(), name: "Sveta"},
-    ],
+    ] as dialogType[],
 }
 
-export const dialogsReducer = (state = init, action: mainType
+export type initialStateType = typeof init
+
+export const dialogsReducer = (state:initialStateType = init, action: mainType
 ) =>
 {
     switch (action.type) {
