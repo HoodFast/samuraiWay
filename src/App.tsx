@@ -7,22 +7,13 @@ import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 
-import {dialogType, messageType, navbarBlockType} from "./Redux/store";
+import {dialogType, messageType} from "./Redux/store";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {NavbarContainer} from "./components/Navbar/NavbarContainer";
 
 import {UsersContainer} from "./components/Users/UsersContainer";
 
-// export type AppPropsType ={
-//     store:any
-//     dispatch:any
-//
-// }
-// export type stateType = {
-//     sidebar:navbarBlockType
-//     profilePage: profilePageType
-//     dialogsPage: dialogsPageType
-// }
+
 export type profilePageType = {
     posts: Array<postType>
     newPostText:string

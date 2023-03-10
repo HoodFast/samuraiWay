@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {dialogsPageType} from "../App";
+
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
 const SEND_MESSAGE = 'ADD-MESSAGE'
@@ -30,16 +30,15 @@ let init = {
 
 export type initialStateType = typeof init
 
-export const dialogsReducer = (state:initialStateType = init, action: mainType
-) =>
-{
+export const dialogsReducer = (state: initialStateType = init, action: mainType
+): initialStateType => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY:
-            return {...state,newMessageBody:action.newMessageBody};
+            return {...state, newMessageBody: action.newMessageBody};
         case SEND_MESSAGE:
             const newMessage = {id: v1(), message: state.newMessageBody}
             state.newMessageBody = ''
-            return {...state,messages:[...state.messages,newMessage]};
+            return {...state, messages: [...state.messages, newMessage]};
         default:
             return state;
     }
@@ -48,10 +47,12 @@ export const dialogsReducer = (state:initialStateType = init, action: mainType
 
 type mainType = addNewMessageTextType | updateNewMessageCreatorType
 
-type addNewMessageTextType=ReturnType<typeof addNewMessageTextCreator>
-type updateNewMessageCreatorType=ReturnType<typeof updateNewMessageTextCreator>
+type addNewMessageTextType = ReturnType<typeof addNewMessageTextCreator>
+type updateNewMessageCreatorType = ReturnType<typeof updateNewMessageTextCreator>
 
 
-
-export const updateNewMessageTextCreator = (text: string) => ({type: UPDATE_NEW_MESSAGE_BODY, newMessageBody: text}as const)
-export const addNewMessageTextCreator = () => ({type: SEND_MESSAGE}as const)
+export const updateNewMessageTextCreator = (text: string) => ({
+    type: UPDATE_NEW_MESSAGE_BODY,
+    newMessageBody: text
+} as const)
+export const addNewMessageTextCreator = () => ({type: SEND_MESSAGE} as const)
