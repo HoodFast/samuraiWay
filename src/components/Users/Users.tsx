@@ -1,35 +1,43 @@
-import s from './users.module.css'
-import axios from "axios";
+import s from "./users.module.css";
+import React from "react";
+import {propsUsersType, UsersPropsTypePresent} from "./UsersContainer";
+
+type usersProps = {
+    totalUsersCount: number
+    pageSize: number
+    currentPage: number
+    users: propsUsersType[]
+    onPageChanged: (el: number) => void
+    unfollow: (id: number) => void
+    follow: (id: number) => void
+}
 
 
+export const Users = (props: usersProps) => {
 
-export const Users = (props) => {
-    console.log(props)
-    let getUsers = () => {
-        if (props.users.length === 0) {
-            axios.get('https://social-network.samuraijs.com/api/1.0/users').then(
-                response => {
-
-                    props.setUsers(response.data.items)
-                }
-            )
-        }
+    const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
+    const pages: number[] = []
+    for (let i = 1; i <= (pagesCount > 10 && 10); i++) {
+        pages.push(i);
     }
-
-    const urlPhoto = 'https://pixelbox.ru/wp-content/uploads/2021/02/mult-ava-instagram-58.jpg'
     return (
         <div>
-            <button onClick={getUsers}>GetUserrs</button>
+            <div>
+                {pages.map(el => <span onClick={() => props.onPageChanged(el)}
+                                       className={props.currentPage === el ? s.selectedPage : ''}> {el} </span>)}
+            </div>
             {
                 props.users.map((el) => {
                     return (
                         <div key={el.id}>
                             <span>
                                 <div>
-                                    <img className={s.userPhoto} src={el.photos.small ? el.photos.small : urlPhoto}/>
+                                    <img className={s.userPhoto}
+                                         src={el.photos.small ? el.photos.small : 'https://pixelbox.ru/wp-content/uploads/2021/02/mult-ava-instagram-58.jpg'}/>
                                 </div>
                                 <div>
-                                    {el.followed ? <button onClick={() => props.unfollow(el.id)}>Unfollow</button> :
+                                    {el.followed ?
+                                        <button onClick={() => props.unfollow(el.id)}>Unfollow</button> :
                                         <button onClick={() => props.follow(el.id)}>Follow</button>}
                                 </div>
                             </span>
@@ -42,14 +50,6 @@ export const Users = (props) => {
                                         {el.status}
                                     </div>
                                 </span>
-                                {/*<span>*/}
-                                {/*    <div>*/}
-                                {/*        {el.location.country}*/}
-                                {/*    </div>*/}
-                                {/*    <div>*/}
-                                {/*         {el.location.city}*/}
-                                {/*    </div>*/}
-                                {/*</span>*/}
                             </span>
                         </div>
                     )
