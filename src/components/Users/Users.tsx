@@ -10,6 +10,7 @@ type usersProps = {
     onPageChanged: (el: number) => void
     unfollow: (id: number) => void
     follow: (id: number) => void
+    isFetching:boolean
 }
 
 
@@ -23,7 +24,7 @@ export const Users = (props: usersProps) => {
     return (
         <div>
             <div>
-                {pages.map(el => <span onClick={() => props.onPageChanged(el)}
+                {pages.map(el => <span key={el} onClick={() => props.onPageChanged(el)}
                                        className={props.currentPage === el ? s.selectedPage : ''}> {el} </span>)}
             </div>
             {
