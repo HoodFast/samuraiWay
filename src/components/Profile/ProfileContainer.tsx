@@ -4,21 +4,31 @@ import axios from "axios";
 import {AppStateType} from "../../Redux/redux-store";
 import {connect} from "react-redux";
 import {profilePageType, propsProfileType, setUserProfile} from "../../Redux/profile-reducer";
+import {useParams} from 'react-router-dom';
 
+type DispatchToPropsType = {
+    setUserProfile: (data: propsProfileType) => void
+}
 
+export type ProfilePropsTypePresent = profilePageType & DispatchToPropsType
 
-
-    type DispatchToPropsType = {
-        setUserProfile:(data:propsProfileType)=>void
+export function withRouter(ProfileAPIContainer) {
+    return (props) => {
+        const match = {params: useParams()};
+        return <ProfileAPIContainer {...props} match={match}/>
     }
-
-    export type ProfilePropsTypePresent = profilePageType & DispatchToPropsType
+}
 
 export class ProfileAPIContainer extends React.Component<ProfilePropsTypePresent> {
-    componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`).then(
-            response => {
 
+    componentDidMount() {
+        // @ts-ignore
+        let profileId = this.props.match.params.userId
+        if (!profileId) {
+            profileId = 2
+        }
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + profileId).then(
+            response => {
 
                 this.props.setUserProfile(response.data)
             })
@@ -29,12 +39,12 @@ export class ProfileAPIContainer extends React.Component<ProfilePropsTypePresent
     }
 }
 
-const mapStateToProps=(state:AppStateType)=>{
-    return{
-        posts:state.profilePage.posts,
-        newPostText:state.profilePage.newPostText,
-        profile:state.profilePage.profile
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        posts: state.profilePage.posts,
+        newPostText: state.profilePage.newPostText,
+        profile: state.profilePage.profile
     }
 }
 
-export const ProfileContainer=connect(mapStateToProps,{setUserProfile})(ProfileAPIContainer)
+export const ProfileContainer = connect(mapStateToProps, {setUserProfile})(withRouter(ProfileAPIContainer))
