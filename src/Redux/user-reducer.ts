@@ -19,7 +19,7 @@ export type userPageType = {
 
 let init: userPageType = {
     users: [],
-    pageSize: 2,
+    pageSize: 5,
     totalUsersCount: 50,
     currentPage: 1,
     isFetching: false
@@ -61,17 +61,17 @@ type mainType =
     totalUsersCountACType |
     setIsFetchingACType
 
-type followACType = ReturnType<typeof followAC>
-type unfollowACType = ReturnType<typeof unfollowAC>
-type setUsersACACType = ReturnType<typeof setUsersAC>
-type setCurrentPageACType = ReturnType<typeof setCurrentPageAC>
-type totalUsersCountACType = ReturnType<typeof setTotalUsersCountAC>
-type setIsFetchingACType = ReturnType<typeof setIsFetchingAC>
+type followACType = ReturnType<typeof follow>
+type unfollowACType = ReturnType<typeof unfollow>
+type setUsersACACType = ReturnType<typeof setUsers>
+type setCurrentPageACType = ReturnType<typeof setCurrentPage>
+type totalUsersCountACType = ReturnType<typeof setTotalUsersCount>
+type setIsFetchingACType = ReturnType<typeof setIsFetching>
 
 
-export const followAC = (userId: number) => ({type: FOLLOW, payload: {userId}} as const)
-export const unfollowAC = (userId: number) => ({type: UNFOLLOW, payload: {userId}} as const)
-export const setUsersAC = (users: propsUsersType[]) => ({type: SET_USERS, payload: {users}} as const)
-export const setCurrentPageAC = (pageId: number) => ({type: SET_CURRENT_PAGE, payload: {pageId}} as const)
-export const setTotalUsersCountAC = (totalUsersCount: number) => ({type: TOTAL_USERS_COUNT, payload: {totalUsersCount}} as const)
-export const setIsFetchingAC = (fetching:boolean) => ({type: TOGGLE_IS_FETCHING, payload: {fetching}} as const)
+export const follow = (userId: number) => ({type: FOLLOW, payload: {userId}} as const)
+export const unfollow = (userId: number) => ({type: UNFOLLOW, payload: {userId}} as const)
+export const setUsers = (users: propsUsersType[]) => ({type: SET_USERS, payload: {users}} as const)
+export const setCurrentPage = (pageId: number) => ({type: SET_CURRENT_PAGE, payload: {pageId}} as const)
+export const setTotalUsersCount = (totalUsersCount: number) => ({type: TOTAL_USERS_COUNT, payload: {totalUsersCount}} as const)
+export const setIsFetching = (fetching:boolean) => ({type: TOGGLE_IS_FETCHING, payload: {fetching}} as const)

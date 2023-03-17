@@ -1,6 +1,7 @@
 import s from "./users.module.css";
 import React from "react";
-import {propsUsersType, UsersPropsTypePresent} from "./UsersContainer";
+import {propsUsersType} from "./UsersContainer";
+import {NavLink} from "react-router-dom";
 
 type usersProps = {
     totalUsersCount: number
@@ -33,8 +34,10 @@ export const Users = (props: usersProps) => {
                         <div key={el.id}>
                             <span>
                                 <div>
+                                    <NavLink to={"/profile/"+el.id}>
                                     <img className={s.userPhoto}
                                          src={el.photos.small ? el.photos.small : 'https://pixelbox.ru/wp-content/uploads/2021/02/mult-ava-instagram-58.jpg'}/>
+                                    </NavLink>
                                 </div>
                                 <div>
                                     {el.followed ?

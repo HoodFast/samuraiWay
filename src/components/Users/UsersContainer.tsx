@@ -1,19 +1,16 @@
 import {connect} from "react-redux";
 import {
-    followAC,
-    setCurrentPageAC, setIsFetchingAC,
-    setTotalUsersCountAC,
-    setUsersAC,
-    unfollowAC,
+    follow,
+    setCurrentPage, setIsFetching,
+    setTotalUsersCount,
+    setUsers,
+    unfollow,
     userPageType
 } from "../../Redux/user-reducer";
 import {AppStateType} from "../../Redux/redux-store";
-import {Dispatch} from "redux";
 import React from "react";
-
 import {Users} from "./Users";
 import axios from "axios"
-import preloader from "../../assets/Skate.gif"
 import {Preloader} from "../common/preloader/Preloader";
 
 
@@ -72,7 +69,7 @@ class UsersAPIComponent extends React.Component<UsersPropsTypePresent> {
     render() {
         return <>
 
-            {this.props.isFetching ? <Preloader isFetching={this.props.isFetching}/>:null}
+            {this.props.isFetching ? <Preloader isFetching={this.props.isFetching}/> : null}
             <Users
                 totalUsersCount={this.props.totalUsersCount}
                 pageSize={this.props.pageSize}
@@ -98,29 +95,13 @@ const mapStateToProps = (state: AppStateType): userPageType => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
-    return {
-        follow: (userId) => {
-            dispatch(followAC(userId))
-        },
-        unfollow: (userId) => {
-            dispatch(unfollowAC(userId))
-        },
-        setUsers: (users) => {
-            dispatch(setUsersAC(users))
-        },
-        setCurrentPage: (pageId) => {
-            dispatch(setCurrentPageAC(pageId))
-        },
-        setTotalUsersCount: (totalUsersCount) => {
-            dispatch(setTotalUsersCountAC(totalUsersCount))
-        },
-        setIsFetching: (fetching) => {
-            dispatch(setIsFetchingAC(fetching))
-
-        }
-    }
-}
 
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersAPIComponent)
+export const UsersContainer = connect(mapStateToProps, {
+        follow,
+        unfollow,
+        setUsers,
+        setCurrentPage,
+        setTotalUsersCount,
+        setIsFetching
+    })(UsersAPIComponent)

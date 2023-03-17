@@ -1,15 +1,15 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent} from "react";
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
 import {postType} from "../../../App";
-import {addPostActionCreator, updateNewPostTextCreator} from "../../../Redux/profile-reducer";
+
 
 
 
 type MyPostPropsType = {
     posts: Array<postType>
     newPostText:string
-    updateNewPostText: (text:string)=>void
+    updateNewPost: (text:string)=>void
     addPost: ()=>void
 }
 
@@ -19,7 +19,7 @@ export const MyPosts = (props: MyPostPropsType) => {
     const postElements = props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>)
     const textAreaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let text = e.currentTarget.value
-        props.updateNewPostText(text)
+        props.updateNewPost(text)
     }
     const addPost = () => {
         props.addPost()
