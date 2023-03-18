@@ -3,6 +3,9 @@ import React from "react";
 import {propsUsersType} from "./UsersContainer";
 import {NavLink} from "react-router-dom";
 
+import {followAPI} from "../../api/api";
+
+
 type usersProps = {
     totalUsersCount: number
     pageSize: number
@@ -11,19 +14,26 @@ type usersProps = {
     onPageChanged: (el: number) => void
     unfollow: (id: number) => void
     follow: (id: number) => void
-    isFetching:boolean
+    isFetching: boolean
+    followingInProgress: number[]
+    toggleFollowing: (isFetching: boolean, value: number) => void
 }
 
 
 export const Users = (props: usersProps) => {
 
-    const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
+    if (pagesCount >= 10) {
+        pagesCount = 10
+    }
     const pages: number[] = []
-    for (let i = 1; i <= (pagesCount > 10 && 10); i++) {
+    for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
+
     return (
         <div>
+
             <div>
                 {pages.map(el => <span key={el} onClick={() => props.onPageChanged(el)}
                                        className={props.currentPage === el ? s.selectedPage : ''}> {el} </span>)}
@@ -31,18 +41,40 @@ export const Users = (props: usersProps) => {
             {
                 props.users.map((el) => {
                     return (
+
                         <div key={el.id}>
                             <span>
                                 <div>
-                                    <NavLink to={"/profile/"+el.id}>
+                                    <NavLink to={"/profile/" + el.id}>
                                     <img className={s.userPhoto}
                                          src={el.photos.small ? el.photos.small : 'https://pixelbox.ru/wp-content/uploads/2021/02/mult-ava-instagram-58.jpg'}/>
                                     </NavLink>
                                 </div>
                                 <div>
                                     {el.followed ?
-                                        <button onClick={() => props.unfollow(el.id)}>Unfollow</button> :
-                                        <button onClick={() => props.follow(el.id)}>Follow</button>}
+                                        <button disabled={props.followingInProgress.some(id => id === el.id)}
+                                                onClick={() => {
+
+                                                    props.toggleFollowing(true, el.id)
+                                                    followAPI.unFollow(el.id).then(data => {
+                                                        if (data.resultCode === 0) {
+                                                            props.unfollow(el.id);
+                                                        }
+                                                        props.toggleFollowing(false, el.id)
+                                                    })
+                                                }}>Unfollow</button> :
+                                        <button disabled={props.followingInProgress.some(id => id === el.id)}
+                                                onClick={() => {
+                                                    props.toggleFollowing(true, el.id)
+                                                    followAPI.getFollow(el.id).then(
+                                                        data => {
+                                                            if (data.resultCode === 0) {
+                                                                props.follow(el.id);
+                                                            }
+                                                            props.toggleFollowing(false, el.id)
+                                                        })
+
+                                                }}>Follow</button>}
                                 </div>
                             </span>
                             <span>

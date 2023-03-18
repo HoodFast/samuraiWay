@@ -4,11 +4,7 @@ import {NavLink} from "react-router-dom";
 import {HeaderPropsTypePresent} from "./HeaderContainer";
 
 
-
-
-
-
-export const Header = (props:HeaderPropsTypePresent) => {
+export const Header = (props: HeaderPropsTypePresent) => {
 
     return (
         <header className={s.header}>
@@ -16,9 +12,10 @@ export const Header = (props:HeaderPropsTypePresent) => {
             <span> Социальная сеть </span>
             {props.userId}
             <div className={s.loginBlock}>
-                {props.isAuth?props.login:<NavLink to={'/login'}>Login</NavLink>}
-
-                {props.email}
+                {props.isAuth ? props.login : <NavLink to={'/login'}>Login</NavLink>}
+                <div>
+                    {props.email}
+                </div>
 
             </div>
         </header>

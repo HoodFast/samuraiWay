@@ -21,7 +21,7 @@ export class HeaderAPIContainer extends React.Component<HeaderPropsTypePresent> 
         }).then(
 
             response => {
-                debugger
+
                 if(response.data.resultCode === 0) {
                     this.props.setAuth(
                         response.data.data.id,
