@@ -10,6 +10,7 @@ import {dialogType, messageType} from "./Redux/store";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {NavbarContainer} from "./components/Navbar/NavbarContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
+import {HeaderAPIContainer, HeaderContainer} from "./components/Header/HeaderContainer";
 
 
 
@@ -30,7 +31,7 @@ const App = () => {
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
-                <Header/>
+                <HeaderContainer/>
                 <NavbarContainer />
 
 
