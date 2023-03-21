@@ -24,14 +24,6 @@ export class ProfileAPIContainer extends React.Component<ProfilePropsTypePresent
         // @ts-ignore
         let profileId = this.props.match.params.userId
         this.props.getProfile(profileId)
-        // if (!profileId) {
-        //     profileId = 2
-        // }
-        // axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + profileId).then(
-        //     response => {
-        //
-        //         this.props.setUserProfile(response.data)
-        //     })
     }
 
     render() {

@@ -62,7 +62,6 @@ class UsersAPIComponent extends React.Component<UsersPropsTypePresent> {
                 onPageChanged={this.onPageChanged}
                 unfollow={this.props.unfollow}
                 follow={this.props.follow}
-                isFetching={this.props.isFetching}
                 followingInProgress={this.props.followingInProgress}
             />
         </>
