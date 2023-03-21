@@ -1,10 +1,16 @@
 import {v1} from "uuid";
 import {postType} from "../App";
+import {profileAPI} from "../api/api";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./redux-store";
 
 
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+
+
+export type profileThunkType = ThunkAction<void, AppStateType, any, mainType>
 
 export type propsProfileType =
     {
@@ -72,3 +78,17 @@ type setUserProfileType = ReturnType<typeof setUserProfile>
 export const addPost = () => ({type: ADD_POST} as const)
 export const updateNewPost = (text: string) => ({type: UPDATE_NEW_POST_TEXT, newText: text} as const)
 export const setUserProfile = (profile: propsProfileType) => ({type: SET_USER_PROFILE, payload: {profile}} as const)
+
+
+export const getProfile=(profileId:number):profileThunkType=>{
+    return (dispatch)=>{
+        profileAPI.getProfile(profileId).then(
+            (data)=>{
+                if(data.userId){
+                    dispatch(setUserProfile(data))
+                }
+            }
+        )
+    }
+}
+

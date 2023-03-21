@@ -3,7 +3,6 @@ import React from "react";
 import {propsUsersType} from "./UsersContainer";
 import {NavLink} from "react-router-dom";
 
-import {followAPI} from "../../api/api";
 
 
 type usersProps = {
@@ -16,7 +15,6 @@ type usersProps = {
     follow: (id: number) => void
     isFetching: boolean
     followingInProgress: number[]
-    toggleFollowing: (isFetching: boolean, value: number) => void
 }
 
 
@@ -54,25 +52,26 @@ export const Users = (props: usersProps) => {
                                     {el.followed ?
                                         <button disabled={props.followingInProgress.some(id => id === el.id)}
                                                 onClick={() => {
-
-                                                    props.toggleFollowing(true, el.id)
-                                                    followAPI.unFollow(el.id).then(data => {
-                                                        if (data.resultCode === 0) {
-                                                            props.unfollow(el.id);
-                                                        }
-                                                        props.toggleFollowing(false, el.id)
-                                                    })
+                                                    props.unfollow(el.id)
+                                                    // props.toggleFollowing(true, el.id)
+                                                    // usersAPI.unFollow(el.id).then(data => {
+                                                    //     if (data.resultCode === 0) {
+                                                    //         props.unfollow(el.id);
+                                                    //     }
+                                                    //     props.toggleFollowing(false, el.id)
+                                                    // })
                                                 }}>Unfollow</button> :
                                         <button disabled={props.followingInProgress.some(id => id === el.id)}
                                                 onClick={() => {
-                                                    props.toggleFollowing(true, el.id)
-                                                    followAPI.getFollow(el.id).then(
-                                                        data => {
-                                                            if (data.resultCode === 0) {
-                                                                props.follow(el.id);
-                                                            }
-                                                            props.toggleFollowing(false, el.id)
-                                                        })
+                                                    props.follow(el.id)
+                                                    // props.toggleFollowing(true, el.id)
+                                                    // usersAPI.getFollow(el.id).then(
+                                                    //     data => {
+                                                    //         if (data.resultCode === 0) {
+                                                    //             props.follow(el.id);
+                                                    //         }
+                                                    //         props.toggleFollowing(false, el.id)
+                                                    //     })
 
                                                 }}>Follow</button>}
                                 </div>
