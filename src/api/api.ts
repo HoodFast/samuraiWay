@@ -21,7 +21,7 @@ export const usersAPI = {
     },
 
     getProfile(profileId: number) {
-        return instance.get(`profile/` + profileId, {withCredentials: true}).then
+        return instance.get(`profile/` + profileId).then
         (response => response.data)
     }
 }
@@ -29,8 +29,7 @@ export const usersAPI = {
 
 export const meAPI = {
     getMe() {
-
-        return instance.get(`auth/me/`, {withCredentials: true}).then(response => {
+        return instance.get(`auth/me/`).then(response => {
             return response.data
         })
     }
@@ -44,7 +43,7 @@ export const profileAPI = {
             profileId = 2
         }
 
-        return instance.get(`profile/` + profileId, {withCredentials: true}).then(
+        return instance.get(`profile/` + profileId).then(
             response => {
                 return response.data
             }

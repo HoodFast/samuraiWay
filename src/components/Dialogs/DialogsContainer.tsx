@@ -10,7 +10,8 @@ import {Dispatch} from "react";
 
 const mapStateToProps=(state:AppStateType)=>{
     return{
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth
     }
 }
 const mapDispatchToProps=(dispatch:Dispatch<any>)=>{

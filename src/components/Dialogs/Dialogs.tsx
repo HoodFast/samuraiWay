@@ -4,6 +4,9 @@ import {DialogItem} from "./DialogItem/DialogItem";
 
 import {ChangeEvent} from "react";
 import {dialogsPageType} from "../../App";
+import {Navigate} from "react-router-dom";
+
+
 
 
 
@@ -12,6 +15,7 @@ type dialogsPropsStateType ={
     updateNewMessageBody:(body:string)=>void
     addNewMessageText:()=>void
     dialogsPage:dialogsPageType
+    isAuth:boolean
 }
 
 
@@ -27,6 +31,9 @@ export const Dialogs = (props:dialogsPropsStateType) => {
     let state=props.dialogsPage
     const dialogsDataMap = state.dialogs.map(dialog => <DialogItem key={dialog.id} name={dialog.name} id={dialog.id}/>)
     const messageDataMap = state.messages.map(message => <Message key={message.id} message={message.message}/>)
+    if(!props.isAuth){
+        return <Navigate to={"/login"}/>
+    }
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
