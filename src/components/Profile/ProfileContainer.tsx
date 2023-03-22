@@ -23,6 +23,9 @@ export class ProfileAPIContainer extends React.Component<ProfilePropsTypePresent
     componentDidMount() {
         // @ts-ignore
         let profileId = this.props.match.params.userId
+        if (!profileId) {
+            profileId = 2
+        }
         this.props.getProfile(profileId)
     }
 

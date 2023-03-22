@@ -1,13 +1,12 @@
 import React from "react";
-import axios from "axios";
+
 import {Header} from "./Header";
 import {connect} from "react-redux";
-import {authUserType, getMe, setAuth} from "../../Redux/auth-reducer";
+import {authUserType, getMe} from "../../Redux/auth-reducer";
 import {AppStateType} from "../../Redux/redux-store";
 
 
 type DispatchToPropsType = {
-    setAuth: (userId: number, email: string, login: string) => void
     getMe: () => void
 }
 
@@ -49,4 +48,4 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
-export const HeaderContainer = connect(mapStateToProps, {setAuth, getMe})(HeaderAPIContainer);
+export const HeaderContainer = connect(mapStateToProps, {getMe})(HeaderAPIContainer);

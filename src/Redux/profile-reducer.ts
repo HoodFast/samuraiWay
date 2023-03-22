@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {postType} from "../App";
-import {profileAPI} from "../api/api";
+import {usersAPI} from "../api/api";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
 
@@ -82,7 +82,7 @@ export const setUserProfile = (profile: propsProfileType) => ({type: SET_USER_PR
 
 export const getProfile=(profileId:number):profileThunkType=>{
     return (dispatch)=>{
-        profileAPI.getProfile(profileId).then(
+        usersAPI.getProfile(profileId).then(
             (data)=>{
                 if(data.userId){
                     dispatch(setUserProfile(data))
