@@ -34,19 +34,3 @@ export const meAPI = {
         })
     }
 }
-
-
-export const profileAPI = {
-
-    getProfile(profileId: number) {
-        if (!profileId) {
-            profileId = 2
-        }
-
-        return instance.get(`profile/` + profileId).then(
-            response => {
-                return response.data
-            }
-        )
-    }
-}
