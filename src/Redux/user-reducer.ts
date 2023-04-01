@@ -27,8 +27,8 @@ export type userPageType = {
 
 let init: userPageType = {
     users: [],
-    pageSize: 5,
-    totalUsersCount: 50,
+    pageSize: 10,
+    totalUsersCount: 5000,
     currentPage: 1,
     isFetching: false,
     followingInProgress: []

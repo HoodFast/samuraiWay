@@ -1,10 +1,16 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, RefObject} from "react";
+
+type ProfileStatusPropsType = {
+    status:string
+}
 
 
 export class ProfileStatus extends React.Component {
+
     state = {
         active: false,
-        status:'status'
+        // @ts-ignore
+        status: this.props.status
     }
     // const [status, setStatus] = useState('status')
     // const [active, setActive] = useState(false)
@@ -24,12 +30,14 @@ export class ProfileStatus extends React.Component {
         this.setState({
             active:true
         })
-debugger
+
     }
-    ofInput=()=> {
+    deactivateInput=()=> {
         this.setState({
             active:false
         })
+        // @ts-ignore
+        this.props.updateStatus(this.state.status)
     }
     inputHandler=(e: ChangeEvent<HTMLInputElement>)=>  {
         this.setState({
@@ -40,7 +48,7 @@ debugger
 
     render() {
         return (
-            this.state.active ? <div><input autoFocus onBlur={this.ofInput} value={this.state.status} onChange={this.inputHandler}/></div> :
+            this.state.active ? <div><input autoFocus onBlur={this.deactivateInput} value={this.state.status} onChange={this.inputHandler}/></div> :
                 <div><span onClick={this.activateInput}>{this.state.status}</span></div>
 
         )

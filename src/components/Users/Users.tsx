@@ -29,8 +29,8 @@ export const Users: React.FC<usersProps> = (
     }) => {
 
     let pagesCount = Math.ceil(totalUsersCount / pageSize)
-    if (pagesCount >= 10) {
-        pagesCount = 10
+    if (pagesCount >= 10000) {
+        pagesCount = 10000
     }
     const pages: number[] = []
     for (let i = 1; i <= pagesCount; i++) {

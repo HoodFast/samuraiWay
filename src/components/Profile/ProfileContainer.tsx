@@ -2,7 +2,7 @@ import React from "react";
 import {Profile} from "./Profile";
 import {AppStateType} from "../../Redux/redux-store";
 import {connect} from "react-redux";
-import {getProfile, propsProfileType, setUserProfile} from "../../Redux/profile-reducer";
+import {getProfile, getStatus, propsProfileType, setUserProfile, updateStatus} from "../../Redux/profile-reducer";
 import {useParams} from 'react-router-dom';
 import {postType} from "../../App";
 import {withAuthRedirect} from "../hoc/withAuthRedirect";
@@ -14,10 +14,12 @@ type profilePropsType = {
     newPostText: string
     profile: propsProfileType | null
     isAuth: boolean
+    status: string
 }
 
 type DispatchToPropsType = {
     getProfile: (profileId: number) => void
+    getStatus: (profileId: number) => void
 }
 
 export type ProfilePropsTypePresent = profilePropsType & DispatchToPropsType
@@ -33,11 +35,12 @@ export class ProfileAPIContainer extends React.Component<ProfilePropsTypePresent
 
     componentDidMount() {
         // @ts-ignore
-        let profileId = this.props.match.params.userId
-        if (!profileId) {
-            profileId = 2
+        let userId = this.props.match.params.userId
+        if (!userId) {
+            userId = 28121
         }
-        this.props.getProfile(profileId)
+        this.props.getProfile(userId)
+        this.props.getStatus(userId)
     }
 
     render() {
@@ -50,15 +53,18 @@ const mapStateToProps = (state: AppStateType) => {
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText,
         profile: state.profilePage.profile,
+        status: state.profilePage.status
     }
 }
 
-export const ProfileContainer=compose(
+export const ProfileContainer = compose(
     withAuthRedirect,
     withRouter,
     connect(mapStateToProps, {
         setUserProfile,
-        getProfile
+        getProfile,
+        getStatus,
+        updateStatus
     })
 )(ProfileAPIContainer)
 

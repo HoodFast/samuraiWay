@@ -9,6 +9,8 @@ import {ProfileStatus} from "./ProfileStatus";
 
 type profileInfoProps = {
     profile: propsProfileType
+    status:string
+    updateStatus:(status:string)=>void
 }
 
 export const ProfileInfo = (props: profileInfoProps) => {
@@ -16,6 +18,7 @@ export const ProfileInfo = (props: profileInfoProps) => {
         return <Preloader isFetching={true}/>
     }
     let fName = props.profile.fullName
+
 
     return (
         <>
@@ -25,7 +28,8 @@ export const ProfileInfo = (props: profileInfoProps) => {
             <div>
                 {/*<img src='https://img2.akspic.ru/attachments/crops/0/7/6/9/39670/39670-ekstremalnyj_vid_sporta-Vozdushnyy_sharik-polety_na_vozdushnom_share-turizm-gora-3840x2160.jpg'/>*/}
             </div>
-            <ProfileStatus />
+            {/*// @ts-ignore*/}
+            <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
             <div>
                 В активном поиске работы: <img style={{width: 40}} src={props.profile.lookingForAJob? yes:no} />
             </div>
