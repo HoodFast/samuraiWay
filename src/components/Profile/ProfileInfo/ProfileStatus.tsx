@@ -1,11 +1,12 @@
 import React, {ChangeEvent, RefObject} from "react";
 
 type ProfileStatusPropsType = {
-    status:string
+    active:boolean
+    status: string
 }
 
 
-export class ProfileStatus extends React.Component {
+export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
 
     state = {
         active: false,
@@ -25,30 +26,39 @@ export class ProfileStatus extends React.Component {
     //     setActive(false)
     // }
 
-    activateInput=()=> {
+    activateInput = () => {
 
         this.setState({
-            active:true
+            active: true
         })
 
     }
-    deactivateInput=()=> {
+    deactivateInput = () => {
         this.setState({
-            active:false
+            active: false
         })
         // @ts-ignore
         this.props.updateStatus(this.state.status)
     }
-    inputHandler=(e: ChangeEvent<HTMLInputElement>)=>  {
+    inputHandler = (e: ChangeEvent<HTMLInputElement>) => {
         this.setState({
-            status:e.currentTarget.value
+            status: e.currentTarget.value
         })
-     }
+    }
 
+    componentDidUpdate(prevProps:ProfileStatusPropsType, prevState:ProfileStatusPropsType) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
+
+    }
 
     render() {
         return (
-            this.state.active ? <div><input autoFocus onBlur={this.deactivateInput} value={this.state.status} onChange={this.inputHandler}/></div> :
+            this.state.active ? <div><input autoFocus onBlur={this.deactivateInput} value={this.state.status}
+                                            onChange={this.inputHandler}/></div> :
                 <div><span onClick={this.activateInput}>{this.state.status}</span></div>
 
         )

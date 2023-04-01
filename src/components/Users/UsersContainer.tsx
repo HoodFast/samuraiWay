@@ -82,14 +82,14 @@ const mapStateToProps = (state: AppStateType): userPageType => {
     }
 }
 
-export const UsersContainer = compose(
-    withAuthRedirect,
+export const UsersContainer = compose<React.ComponentType>(
     connect(mapStateToProps, {
         follow,
         unfollow,
         setCurrentPage,
         getUsers
-    })
+    }),
+    withAuthRedirect,
 )(UsersAPIComponent)
 
 // export const UsersContainers = withAuthRedirect(connect(mapStateToProps, {
