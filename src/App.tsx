@@ -7,11 +7,15 @@ import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {dialogType, messageType} from "./Redux/store";
-import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+
 import {NavbarContainer} from "./components/Navbar/NavbarContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
 import {HeaderAPIContainer, HeaderContainer} from "./components/Header/HeaderContainer";
 import {Login} from "./components/Login/Login";
+import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+
+
+
 
 
 
@@ -29,6 +33,7 @@ export type postType={
 
 
 const App = () => {
+
     return (
         <BrowserRouter>
             <div className='app-wrapper'>

@@ -4,11 +4,6 @@ import {DialogItem} from "./DialogItem/DialogItem";
 
 import {ChangeEvent} from "react";
 import {dialogsPageType} from "../../App";
-import {Navigate} from "react-router-dom";
-
-
-
-
 
 
 type dialogsPropsStateType ={

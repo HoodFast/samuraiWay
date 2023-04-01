@@ -4,6 +4,8 @@ import {propsProfileType} from "../../../Redux/profile-reducer";
 import {Preloader} from "../../common/preloader/Preloader";
 import yes from'../../../assets/yes.jpg'
 import no from'../../../assets/no.jpg'
+import {ProfileStatus} from "./ProfileStatus";
+
 
 type profileInfoProps = {
     profile: propsProfileType
@@ -21,9 +23,9 @@ export const ProfileInfo = (props: profileInfoProps) => {
                 Имя пользователя: {fName}
             </h3>
             <div>
-                <img
-                    src='https://img2.akspic.ru/attachments/crops/0/7/6/9/39670/39670-ekstremalnyj_vid_sporta-Vozdushnyy_sharik-polety_na_vozdushnom_share-turizm-gora-3840x2160.jpg'/>
+                {/*<img src='https://img2.akspic.ru/attachments/crops/0/7/6/9/39670/39670-ekstremalnyj_vid_sporta-Vozdushnyy_sharik-polety_na_vozdushnom_share-turizm-gora-3840x2160.jpg'/>*/}
             </div>
+            <ProfileStatus />
             <div>
                 В активном поиске работы: <img style={{width: 40}} src={props.profile.lookingForAJob? yes:no} />
             </div>
