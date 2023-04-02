@@ -1,4 +1,4 @@
-import {meAPI} from "../api/api";
+import {meAPI, usersAPI} from "../api/api";
 
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
@@ -53,4 +53,10 @@ export const getMe = (): authMeThunkType => {
             }
         )
     }
+}
+
+export const authMe=(value)=>{
+    usersAPI.postLogin(value).then((data)=>{
+        console.log(data)
+    }).catch((data)=>console.log(data) )
 }

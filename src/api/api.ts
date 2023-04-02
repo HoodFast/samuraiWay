@@ -1,9 +1,16 @@
 import axios from "axios";
 
 const instance = axios.create({
-    // withCredentials: true,
+    withCredentials: true,
     baseURL: `https://social-network.samuraijs.com/api/1.0/`
 })
+
+type authType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha: boolean
+}
 
 
 export const usersAPI = {
@@ -23,6 +30,10 @@ export const usersAPI = {
     getProfile(userId: number) {
         console.warn('Obsolete method. used ProfileApi ')
         return profileAPI.getProfile(userId)
+    },
+    postLogin(value: authType) {
+
+        return instance.post('/auth/login/', {...value}).then(response => response)
     }
 }
 
@@ -33,10 +44,10 @@ export const profileAPI = {
         (response => response.data)
     },
     getStatus(userId) {
-        return instance.get(`profile/status/`+ userId)
+        return instance.get(`profile/status/` + userId)
     },
     updateStatus(status) {
-        return instance.put(`profile/status/`,{status})
+        return instance.put(`profile/status/`, {status})
     }
 }
 
