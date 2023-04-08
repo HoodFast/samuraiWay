@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import {Header} from "./components/Header/Header";
 import {ProfileContainer} from "./components/Profile/ProfileContainer";
 import {BrowserRouter, Route, Routes,} from "react-router-dom";
 import {News} from "./components/News/News";
@@ -10,7 +9,7 @@ import {dialogType, messageType} from "./Redux/store";
 
 import {NavbarContainer} from "./components/Navbar/NavbarContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
-import {HeaderAPIContainer, HeaderContainer} from "./components/Header/HeaderContainer";
+import { HeaderContainer} from "./components/Header/HeaderContainer";
 import {Login} from "./components/Login/Login";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 

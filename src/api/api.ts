@@ -12,7 +12,6 @@ type authType = {
     captcha: boolean
 }
 
-
 export const usersAPI = {
     getUsers(currentPage: number, pageSize: number) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
