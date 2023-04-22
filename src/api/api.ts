@@ -5,7 +5,7 @@ const instance = axios.create({
     baseURL: `https://social-network.samuraijs.com/api/1.0/`
 })
 
-type authType = {
+export type authType = {
     email: string
     password: string
     rememberMe: boolean
@@ -33,6 +33,10 @@ export const usersAPI = {
     postLogin(value: authType) {
 
         return instance.post('/auth/login/', {...value}).then(response => response)
+    },
+    logoutMe(){
+
+        return instance.delete('/auth/login/')
     }
 }
 

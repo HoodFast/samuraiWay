@@ -1,7 +1,8 @@
-import {meAPI, usersAPI} from "../api/api";
+import {authType, meAPI, usersAPI} from "../api/api";
 
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
+import {Dispatch} from "react";
 
 
 const SET_USER_DATA = 'SET-USER-DATA'
@@ -38,8 +39,8 @@ type mainType =
 type followACType = ReturnType<typeof setAuth>
 
 
-export const setAuth = (id:number,login:string,email:string) => {
-    return ({type: SET_USER_DATA, payload: {id,login,email}} as const)
+export const setAuth = (id: number, login: string, email: string) => {
+    return ({type: SET_USER_DATA, payload: {id, login, email}} as const)
 }
 
 
@@ -47,16 +48,34 @@ export const getMe = (): authMeThunkType => {
     return (dispatch) => {
         meAPI.getMe().then((data) => {
                 if (data.resultCode === 0) {
-                    let {id,login,email}=data.data
-                    dispatch(setAuth(id,login,email))
+                    let {id, login, email} = data.data
+                    dispatch(setAuth(id, login, email))
                 }
             }
         )
     }
 }
 
-export const authMe=(value)=>{
-    usersAPI.postLogin(value).then((data)=>{
-        console.log(data)
-    }).catch((data)=>console.log(data) )
+
+type formType = {
+    email: string,
+    password: string,
+    checked?: []
+}
+export const authMe = (value) => {
+
+    return (dispatch: Dispatch<mainType>,getState:AppStateType) => {
+
+        usersAPI.postLogin(value).then((data) => {
+            dispatch(setAuth(data.data.userId, getState.auth.login?getState.auth.login:"none", getState.auth.email?getState.auth.email:"none"))
+        }).catch((data) => console.log(data))
+    }
+}
+
+export const logout = () => {
+    return () => {
+        usersAPI.logoutMe().then((data) => {
+
+        })
+    }
 }
