@@ -2,8 +2,9 @@ import s from './Dialogs.module.css'
 import {Message} from "./Message/Message";
 import {DialogItem} from "./DialogItem/DialogItem";
 
-import {ChangeEvent} from "react";
+import React, {ChangeEvent} from "react";
 import {dialogsPageType} from "../../App";
+import {Field, Form, Formik, FormikHelpers} from "formik";
 
 
 type dialogsPropsStateType ={
@@ -12,7 +13,9 @@ type dialogsPropsStateType ={
     dialogsPage:dialogsPageType
     isAuth:boolean
 }
-
+interface Values {
+    textarea: string;
+}
 
 export const Dialogs = (props:dialogsPropsStateType) => {
 
@@ -29,14 +32,33 @@ export const Dialogs = (props:dialogsPropsStateType) => {
 
     return (
         <div className={s.dialogs}>
+            <Formik
+                initialValues={{
+                    textarea: ''
+                }}
+                onSubmit={(
+                    values: Values,
+                    {setSubmitting}: FormikHelpers<Values>
+                ) => {
+                    props.updateNewMessageBody(values.textarea)
+                    props.addNewMessageText();
+                    setSubmitting(false);
+                }}
+            >
+                <Form>
+                    <label htmlFor="textarea">text</label>
+                    <Field id="textarea" name="textarea" placeholder="text"/>
+                    <button type="submit">send</button>
+                </Form>
+            </Formik>
             <div className={s.dialogsItems}>
                 {dialogsDataMap}
             </div>
             <div className={s.messages}>
                 {messageDataMap}
             </div>
-            <textarea value={state.newMessageBody} onChange={textAreaHandler}/>
-            <button onClick={sendHandler}>send</button>
+            {/*<textarea value={state.newMessageBody} onChange={textAreaHandler}/>*/}
+            {/*<button onClick={sendHandler}>send</button>*/}
         </div>
     )
 }
