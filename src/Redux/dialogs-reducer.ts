@@ -37,6 +37,7 @@ export const dialogsReducer = (state: initialStateType = init, action: mainType
             return {...state, newMessageBody: action.newMessageBody};
         case SEND_MESSAGE:
             const newMessage = {id: v1(), message: state.newMessageBody}
+
             state.newMessageBody = ''
             return {...state, messages: [...state.messages, newMessage]};
         default:
