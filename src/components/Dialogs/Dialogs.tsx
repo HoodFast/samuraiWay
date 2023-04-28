@@ -1,10 +1,8 @@
 import s from './Dialogs.module.css'
 import {Message} from "./Message/Message";
 import {DialogItem} from "./DialogItem/DialogItem";
-
 import React from "react";
 import {dialogsPageType} from "../../App";
-import {Field, Form, Formik} from "formik";
 import {AddMessageForm} from "./addMessageForm/AddMessageForm";
 
 
@@ -15,9 +13,6 @@ type dialogsPropsStateType = {
     isAuth: boolean
 }
 
-interface values {
-    textarea: string;
-}
 
 export const Dialogs = (props: dialogsPropsStateType) => {
 
