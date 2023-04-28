@@ -1,5 +1,4 @@
 import {v1} from "uuid";
-import {profileReducer} from "./profile-reducer";
 import {dialogsReducer} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
 
@@ -67,7 +66,6 @@ export const store = {
                 {id: v1(), message: "Hellow"},
                 {id: v1(), message: "How are you?"},
             ],
-            newMessageBody: "",
             dialogs: [
                 {id: v1(), name: "Vitalya"},
                 {id: v1(), name: "Dron"},

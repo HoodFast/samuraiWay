@@ -51,7 +51,6 @@ export class ProfileAPIContainer extends React.Component<ProfilePropsTypePresent
 const mapStateToProps = (state: AppStateType) => {
     return {
         posts: state.profilePage.posts,
-        newPostText: state.profilePage.newPostText,
         profile: state.profilePage.profile,
         status: state.profilePage.status
     }
