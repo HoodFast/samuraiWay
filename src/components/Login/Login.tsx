@@ -1,24 +1,26 @@
 import React from "react";
-import {Field, Form, Formik, FormikHelpers} from "formik";
-import {authMe} from "../../Redux/auth-reducer";
-import {authType} from "../../api/api";
-import {useDispatch} from "react-redux";
-import * as Yup from "yup";
-import s from "../Profile/MyPosts/addPostForm/AddPostFormStyle.module.css";
+import {login} from "../../Redux/auth-reducer";
+import {connect} from "react-redux";
+import {AppStateType} from "../../Redux/redux-store";
+import {Navigate} from "react-router-dom";
+import {LoginForm} from "./LoginForm/LoginForm";
 
-interface Values {
-    email: string;
-    password: string;
+
+type LoginPropsType = {
+    isAuth:boolean
+    login: (email:string,password:string, checked:boolean )=>void
 }
 
 
-export const Login = () => {
-    const dispatch = useDispatch()
+export const Login = (props:LoginPropsType) => {
+
+
     const onSubmit = (form) => {
-        let value: authType = {email: form.email, password: form.password, rememberMe: !!form.checked, captcha: false}
+        props.login(form.email,form.password,!!form.checked)
+    }
 
-        dispatch(authMe(value))
-
+    if(props.isAuth){
+        return <Navigate to={"/profile"}/>
     }
     return (
         <div>
@@ -30,57 +32,15 @@ export const Login = () => {
     )
 }
 
-type LoginFormType = {
-    onSubmit: (data) => void
+const mapStateToProps=(state: AppStateType)=>{
+    return{
+        isAuth:state.auth.isAuth
+    }
 }
 
+export const LoginContainer = connect(mapStateToProps,{login})(Login)
 
-export const LoginForm: React.FC<LoginFormType> = ({onSubmit}) => {
-    const ErrorMessagesSchema = Yup.object().shape({
-        email: Yup.string()
-            .matches(/[a-z]/, "необходимо использовать толлько латинские символы")
-            .required('Required')
-            .email('не похоже на емэйл'),
-        password: Yup.string()
-            .min(2, 'Too Short!')
-            .matches(/[a-z]/, "необходимо использовать толлько латинские символы")
-            .required('Required')
-    });
-    debugger
-    return (
-        <Formik
-            validationSchema={ErrorMessagesSchema}
-            initialValues={{
-                email: '',
-                password: '',
-            }}
-            onSubmit={(
-                values: Values,
-                {setSubmitting}: FormikHelpers<Values>
-            ) => {
-                onSubmit(values)
-                setSubmitting(false);
-            }}
-        >
-            {({errors, touched}) => (
 
-                <Form>
-                    <label htmlFor="email">Email</label>
-                    <Field id="email" name="email" placeholder="login"/>
-                    {touched.email && errors.email && <div className={s.errors}>{errors.email}</div>}
-                    <label htmlFor="password">Password</label>
-                    <Field id="password" name="password" placeholder="password"/>
-                    {touched.password && errors.password && <div className={s.errors}>{errors.password}</div>}
-                    <label>
-                        <Field type="checkbox" name="checked" value="One"/>
-                        remember me
-                    </label>
-                    <button type="submit">Login</button>
 
-                </Form>
 
-            )}
 
-        </Formik>
-    )
-}

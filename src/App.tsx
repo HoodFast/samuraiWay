@@ -10,7 +10,7 @@ import {dialogType, messageType} from "./Redux/store";
 import {NavbarContainer} from "./components/Navbar/NavbarContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
 import { HeaderContainer} from "./components/Header/HeaderContainer";
-import {Login} from "./components/Login/Login";
+import {Login, LoginContainer} from "./components/Login/Login";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 
 
@@ -48,7 +48,7 @@ const App = () => {
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/settings" element={<Settings/>}/>
                     <Route path="/users" element={<UsersContainer/>}/>
-                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/login" element={<LoginContainer/>}/>
                     </Routes>
                 </div>
             </div>

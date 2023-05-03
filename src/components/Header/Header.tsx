@@ -9,9 +9,8 @@ import {useDispatch} from "react-redux";
 
 
 export const Header = (props: HeaderPropsTypePresent) => {
-    const dispatch = useDispatch()
     const HandlerLogout=()=>{
-        dispatch(logout())
+        props.logout()
     }
     return (
         <header className={s.header}>

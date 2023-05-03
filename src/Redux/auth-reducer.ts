@@ -26,7 +26,7 @@ export const authReducer = (state = init, action: mainType): authUserType => {
 
     switch (action.type) {
         case SET_USER_DATA:
-            return {...state, ...action.payload, isAuth: true}
+            return {...state, ...action.payload}
         default:
             return state
     }
@@ -38,9 +38,8 @@ type mainType =
 
 type followACType = ReturnType<typeof setAuth>
 
-
-export const setAuth = (id: number, login: string, email: string) => {
-    return ({type: SET_USER_DATA, payload: {id, login, email}} as const)
+export const setAuth = (id: number | null, login: string|null, email: string|null, isAuth: boolean) => {
+    return ({type: SET_USER_DATA, payload: {id, login, email, isAuth}} as const)
 }
 
 
@@ -49,7 +48,7 @@ export const getMe = (): authMeThunkType => {
         meAPI.getMe().then((data) => {
                 if (data.resultCode === 0) {
                     let {id, login, email} = data.data
-                    dispatch(setAuth(id, login, email))
+                    dispatch(setAuth(id, login, email, true))
                 }
             }
         )
@@ -62,20 +61,25 @@ type formType = {
     password: string,
     checked?: []
 }
-export const authMe = (value) => {
 
-    return (dispatch: Dispatch<mainType>,getState:AppStateType) => {
+export const login = (email: string, password: string, rememberMe: boolean) => {
+    return (dispatch: Dispatch<mainType>) => {
+        meAPI.login({email, password, rememberMe, captcha: true}).then((response) => {
 
-        usersAPI.postLogin(value).then((data) => {
-            dispatch(setAuth(data.data.userId, getState.auth.login?getState.auth.login:"none", getState.auth.email?getState.auth.email:"none"))
-        }).catch((data) => console.log(data))
+            if (response.data.resultCode === 0) {
+                // @ts-ignore
+                dispatch(getMe())
+            }
+        })
     }
 }
 
 export const logout = () => {
-    return () => {
-        usersAPI.logoutMe().then((data) => {
-
+    return (dispatch: Dispatch<mainType>) => {
+        meAPI.logout().then((response) => {
+            if (response.data.resultCode === 0) {
+                dispatch(setAuth(null, null, null, false))
+            }
         })
     }
 }
