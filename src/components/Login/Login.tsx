@@ -8,15 +8,16 @@ import {LoginForm} from "./LoginForm/LoginForm";
 
 type LoginPropsType = {
     isAuth:boolean
-    login: (email:string,password:string, checked:boolean )=>void
+    login: (email:string,password:string, checked:boolean,setFieldValue )=>void
 }
 
 
 export const Login = (props:LoginPropsType) => {
 
 
-    const onSubmit = (form) => {
-        props.login(form.email,form.password,!!form.checked)
+    const onSubmit = (form, setFieldValue) => {
+        props.login(form.email,form.password,!!form.checked,setFieldValue)
+
     }
 
     if(props.isAuth){

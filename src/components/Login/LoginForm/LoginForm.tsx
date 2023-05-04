@@ -6,10 +6,11 @@ import s from "../../Profile/MyPosts/addPostForm/AddPostFormStyle.module.css";
 interface Values {
     email: string;
     password: string;
+    error?:string
 }
 
 type LoginFormType = {
-    onSubmit: (data) => void
+    onSubmit: (data, setFieldValue) => void
 }
 
 export const LoginForm: React.FC<LoginFormType> = ({onSubmit}) => {
@@ -23,7 +24,6 @@ export const LoginForm: React.FC<LoginFormType> = ({onSubmit}) => {
             .matches(/[a-z]/, "необходимо использовать только латинские символы")
             .required('Required')
     });
-
     return (
         <Formik
             validationSchema={ErrorMessagesSchema}
@@ -33,25 +33,27 @@ export const LoginForm: React.FC<LoginFormType> = ({onSubmit}) => {
             }}
             onSubmit={(
                 values: Values,
-                {setSubmitting}: FormikHelpers<Values>
+                {setFieldValue}
             ) => {
-                onSubmit(values)
-                setSubmitting(false);
+                onSubmit(values, setFieldValue)
             }}
         >
-            {({errors, touched}) => (
+            {({errors, touched,values}) => (
 
-                <Form>
+                <Form className={s.form}>
                     <label htmlFor="email">Email</label>
-                    <Field id="email" name="email" placeholder="login"/>
+                    <Field className={s.field} id="email" name="email" placeholder="login"/>
                     {touched.email && errors.email && <div className={s.errors}>{errors.email}</div>}
                     <label htmlFor="password">Password</label>
-                    <Field  type="password" id="password" name="password" placeholder="password"/>
+                    <Field className={s.field} type="password" id="password" name="password" placeholder="password"/>
                     {touched.password && errors.password && <div className={s.errors}>{errors.password}</div>}
                     <label>
-                        <Field type="checkbox" name="checked" value="One"/>
+                        <Field  className={s.field} type="checkbox" name="checked" value="One"/>
                         remember me
                     </label>
+                    <div className={s.errors}>
+                        {values.error ? <div className={s.errorSplash}><p>{values.error}</p></div> : null}
+                    </div>
                     <button type="submit">Login</button>
 
                 </Form>

@@ -1,7 +1,29 @@
-.errors {
-    color:red;
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-left: 40px;
 }
 
-.errorInput{
+.field{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.errors {
+    color: red;
+    display: flex;
+}
+
+.errorInput {
     border: solid 4px red
 }
+
+.errorSplash {
+    height: 50px;
+    background-color: antiquewhite;
+    border-radius: 8px;
+    color: red;
+    padding: 10px;
+}
+

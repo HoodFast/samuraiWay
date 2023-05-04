@@ -1,6 +1,5 @@
 import {Navigate} from "react-router-dom";
 import React, {ComponentType} from "react";
-import {ProfileAPIContainer} from "../Profile/ProfileContainer";
 import {AppStateType} from "../../Redux/redux-store";
 import {connect} from "react-redux";
 

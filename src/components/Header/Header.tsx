@@ -2,9 +2,6 @@ import React from "react";
 import s from './Header.module.css';
 import {NavLink} from "react-router-dom";
 import {HeaderPropsTypePresent} from "./HeaderContainer";
-import {logout} from "../../Redux/auth-reducer";
-import {useDispatch} from "react-redux";
-
 
 
 

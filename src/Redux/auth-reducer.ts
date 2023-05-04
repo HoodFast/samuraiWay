@@ -56,19 +56,16 @@ export const getMe = (): authMeThunkType => {
 }
 
 
-type formType = {
-    email: string,
-    password: string,
-    checked?: []
-}
 
-export const login = (email: string, password: string, rememberMe: boolean) => {
+export const login = (email: string, password: string, rememberMe: boolean,setFieldValue) => {
     return (dispatch: Dispatch<mainType>) => {
         meAPI.login({email, password, rememberMe, captcha: true}).then((response) => {
 
             if (response.data.resultCode === 0) {
                 // @ts-ignore
                 dispatch(getMe())
+            }else{
+                setFieldValue("error", response.data.messages.join(" "))
             }
         })
     }
