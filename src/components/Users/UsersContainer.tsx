@@ -9,14 +9,13 @@ import {AppStateType} from "../../Redux/redux-store";
 import React from "react";
 import {Users} from "./Users";
 import {Preloader} from "../common/preloader/Preloader";
-import {withAuthRedirect} from "../hoc/withAuthRedirect";
 import {compose} from "redux";
 import {
     getCurrentPage, getFollowingInProgress,
     getIsFetching,
     getPageSize,
     getTotalUsersCount,
-    getUsersList
+     getUsersReselect
 } from "../../Redux/users-selectors";
 
 
@@ -90,7 +89,7 @@ class UsersAPIComponent extends React.Component<UsersPropsTypePresent> {
 // }
 const mapStateToProps = (state: AppStateType): userPageType => {
     return {
-        users: getUsersList(state),
+        users: getUsersReselect(state),
         pageSize: getPageSize(state),
         totalUsersCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),

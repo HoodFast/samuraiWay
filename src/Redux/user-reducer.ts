@@ -17,7 +17,7 @@ export type getUsersThunkType = ThunkAction<void, AppStateType, any, mainType>
 
 
 export type userPageType = {
-    users: propsUsersType[]
+    users: any
     pageSize: number
     totalUsersCount: number
     currentPage: number
