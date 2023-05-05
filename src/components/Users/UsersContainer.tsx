@@ -11,6 +11,13 @@ import {Users} from "./Users";
 import {Preloader} from "../common/preloader/Preloader";
 import {withAuthRedirect} from "../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {
+    getCurrentPage, getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+    getUsersList
+} from "../../Redux/users-selectors";
 
 
 
@@ -71,16 +78,27 @@ class UsersAPIComponent extends React.Component<UsersPropsTypePresent> {
     }
 }
 
+// const mapStateToProps = (state: AppStateType): userPageType => {
+//     return {
+//         users: state.usersPage.users,
+//         pageSize: state.usersPage.pageSize,
+//         totalUsersCount: state.usersPage.totalUsersCount,
+//         currentPage: state.usersPage.currentPage,
+//         isFetching: state.usersPage.isFetching,
+//         followingInProgress: state.usersPage.followingInProgress
+//     }
+// }
 const mapStateToProps = (state: AppStateType): userPageType => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        users: getUsersList(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state)
     }
 }
+
 
 export const UsersContainer = compose<React.ComponentType>(
     connect(mapStateToProps, {
@@ -88,13 +106,5 @@ export const UsersContainer = compose<React.ComponentType>(
         unfollow,
         setCurrentPage,
         getUsers
-    }),
-    withAuthRedirect,
+    })
 )(UsersAPIComponent)
-
-// export const UsersContainers = withAuthRedirect(connect(mapStateToProps, {
-//     follow,
-//     unfollow,
-//     setCurrentPage,
-//     getUsers
-// })(UsersAPIComponent))

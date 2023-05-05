@@ -45,7 +45,7 @@ export const setAuth = (id: number | null, login: string|null, email: string|nul
 
 export const getMe = (): authMeThunkType => {
     return (dispatch) => {
-        meAPI.getMe().then((data) => {
+        return meAPI.getMe().then((data) => {
                 if (data.resultCode === 0) {
                     let {id, login, email} = data.data
                     dispatch(setAuth(id, login, email, true))
