@@ -1,33 +1,39 @@
-import React, {ChangeEvent, useState} from "react";
-import {useSelector} from "react-redux";
-import {AppStateType} from "../../../Redux/redux-store";
+import React, {ChangeEvent, useEffect, useState} from "react";
 
 
 type ProfileStatusPropsType = {
+    status:string
     updateStatus:(string)=>void
 }
 
 
 export const ProfileStatusWithHooks = (props:ProfileStatusPropsType) => {
     let [editMode, setEditMod] = useState(false)
-    let status = useSelector<AppStateType, string>((state) => state.profilePage.status)
+    let [value,setValue] = useState(props.status)
+
+    useEffect(()=>{
+        setValue(props.status)
+    },[props.status])
+
     const HandlerStatusEdit = () => {
         setEditMod(!editMode)
     }
-
-    const updateStatus=(e:ChangeEvent<HTMLInputElement>)=>{
-        props.updateStatus(e.currentTarget.value)
+    const statusChange=(e:ChangeEvent<HTMLInputElement>)=>{
+        setValue(e.currentTarget.value)
+    }
+    const updateStatus=()=>{
         setEditMod(!editMode)
+        props.updateStatus(value)
     }
     return (
 
         <div>
             {!editMode && <div>
                 <span onClick={HandlerStatusEdit}
-                >{status || "-----"}</span>
+                >{props.status || "-----"}</span>
             </div>}
             {editMode && <div>
-                <input onBlur={updateStatus} autoFocus={true}/>
+                <input value={value} onChange={statusChange} onBlur={updateStatus} autoFocus={true}/>
             </div>}
         </div>
 

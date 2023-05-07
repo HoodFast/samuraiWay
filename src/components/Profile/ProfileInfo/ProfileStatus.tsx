@@ -1,8 +1,10 @@
 import React, {ChangeEvent, RefObject} from "react";
+import {updateStatus} from "../../../Redux/profile-reducer";
 
 type ProfileStatusPropsType = {
     active:boolean
     status: string
+    updateStatus:(string)=>void
 }
 
 
@@ -10,21 +12,8 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
 
     state = {
         active: false,
-        // @ts-ignore
         status: this.props.status
     }
-    // const [status, setStatus] = useState('status')
-    // const [active, setActive] = useState(false)
-    //
-    // const inputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    //     setStatus(e.currentTarget.value)
-    // }
-    // const activateInput=()=>{
-    //     setActive(true)
-    // }
-    // const ofInput=()=>{
-    //     setActive(false)
-    // }
 
     activateInput = () => {
 
@@ -37,7 +26,7 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
         this.setState({
             active: false
         })
-        // @ts-ignore
+
         this.props.updateStatus(this.state.status)
     }
     inputHandler = (e: ChangeEvent<HTMLInputElement>) => {

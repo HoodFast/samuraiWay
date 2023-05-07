@@ -63,6 +63,7 @@ export const profileReducer = (state = init, action: mainType) => {
         case SET_USER_PROFILE:
             return {...state, profile: action.payload.profile}
         case SET_STATUS:
+
             return {...state,status:action.payload.status}
         default:
             return state
@@ -102,7 +103,7 @@ export const getStatus = (profileId: number): profileThunkType => {
                 if (response.data) {
                     dispatch(setStatus(response.data))
                 }else{
-                    dispatch(setStatus("Дебил статус не смог придумать"))
+                    dispatch(setStatus("Дебил"))
                 }
             }
         )
@@ -114,7 +115,7 @@ export const updateStatus = (status: string): profileThunkType => {
             (response) => {
 
                 if (response.data.resultCode === 0) {
-                    dispatch(setStatus(response.data.message))
+                    dispatch(setStatus(status))
                 }
             }
         )
