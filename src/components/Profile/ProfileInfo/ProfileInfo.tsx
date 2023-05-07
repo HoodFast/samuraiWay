@@ -5,6 +5,7 @@ import {Preloader} from "../../common/preloader/Preloader";
 import yes from'../../../assets/yes.jpg'
 import no from'../../../assets/no.jpg'
 import {ProfileStatus} from "./ProfileStatus";
+import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 
 
 type profileInfoProps = {
@@ -29,7 +30,7 @@ export const ProfileInfo = (props: profileInfoProps) => {
                 {/*<img src='https://img2.akspic.ru/attachments/crops/0/7/6/9/39670/39670-ekstremalnyj_vid_sporta-Vozdushnyy_sharik-polety_na_vozdushnom_share-turizm-gora-3840x2160.jpg'/>*/}
             </div>
             {/*// @ts-ignore*/}
-            <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
+            <ProfileStatusWithHooks/>
             <div>
                 В активном поиске работы: <img style={{width: 40}} src={props.profile.lookingForAJob? yes:no} />
             </div>
