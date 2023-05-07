@@ -30,7 +30,7 @@ export const ProfileInfo = (props: profileInfoProps) => {
                 {/*<img src='https://img2.akspic.ru/attachments/crops/0/7/6/9/39670/39670-ekstremalnyj_vid_sporta-Vozdushnyy_sharik-polety_na_vozdushnom_share-turizm-gora-3840x2160.jpg'/>*/}
             </div>
             {/*// @ts-ignore*/}
-            <ProfileStatusWithHooks/>
+            <ProfileStatusWithHooks updateStatus={props.updateStatus}/>
             <div>
                 В активном поиске работы: <img style={{width: 40}} src={props.profile.lookingForAJob? yes:no} />
             </div>

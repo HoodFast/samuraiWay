@@ -1,15 +1,22 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, useState} from "react";
+import {useSelector} from "react-redux";
+import {AppStateType} from "../../../Redux/redux-store";
+
 
 type ProfileStatusPropsType = {
-    active: boolean
-    status: string
+    updateStatus:(string)=>void
 }
 
 
-export const ProfileStatusWithHooks = (props) => {
+export const ProfileStatusWithHooks = (props:ProfileStatusPropsType) => {
     let [editMode, setEditMod] = useState(false)
-
+    let status = useSelector<AppStateType, string>((state) => state.profilePage.status)
     const HandlerStatusEdit = () => {
+        setEditMod(!editMode)
+    }
+
+    const updateStatus=(e:ChangeEvent<HTMLInputElement>)=>{
+        props.updateStatus(e.currentTarget.value)
         setEditMod(!editMode)
     }
     return (
@@ -17,10 +24,10 @@ export const ProfileStatusWithHooks = (props) => {
         <div>
             {!editMode && <div>
                 <span onClick={HandlerStatusEdit}
-                >{props.status || "-----"}</span>
+                >{status || "-----"}</span>
             </div>}
             {editMode && <div>
-                <input onBlur={HandlerStatusEdit} autoFocus={true}/>
+                <input onBlur={updateStatus} autoFocus={true}/>
             </div>}
         </div>
 
