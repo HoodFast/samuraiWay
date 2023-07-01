@@ -42,7 +42,6 @@ class App extends React.Component<AppType> {
     }
 
     render() {
-        console.log(this.props.initialized)
         if(!this.props.initialized) {
             return <Preloader isFetching={true}/>
         }

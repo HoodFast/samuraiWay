@@ -12,22 +12,36 @@ type MyPostPropsType = {
 }
 
 
-export const MyPosts = (props: MyPostPropsType) => {
-    const postElements = props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>)
-    const addPost = (newPostText: string) => {
-        props.addPost(newPostText)
+export class MyPosts extends React.Component<MyPostPropsType> {
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({a: 12})
+        }, 3000)
     }
 
-    return (
-        <div className={s.postsBlock}>
-            <h3>My posts</h3>
-            <AddPostForm updateNewPost={props.updateNewPost} onSubmit={addPost}/>
+    shouldComponentUpdate(nextProps: Readonly<MyPostPropsType>, nextState: any,): boolean {
+        return nextProps != this.props || nextState != this.state
+    }
 
-            <div className={s.posts}>
-                {postElements}
+    render() {
+        console.log('render')
+        const postElements = this.props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>)
+        const addPost = (newPostText: string) => {
+            this.props.addPost(newPostText)
+        }
+
+        return (
+            <div className={s.postsBlock}>
+                <h3>My posts</h3>
+                <AddPostForm updateNewPost={this.props.updateNewPost} onSubmit={addPost}/>
+
+                <div className={s.posts}>
+                    {postElements}
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
+
 
 
