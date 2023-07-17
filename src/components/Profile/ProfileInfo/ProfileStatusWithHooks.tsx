@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
 
 
+
 type ProfileStatusPropsType = {
     status:string
     updateStatus:(string)=>void
@@ -25,6 +26,7 @@ export const ProfileStatusWithHooks = (props:ProfileStatusPropsType) => {
         setEditMod(!editMode)
         props.updateStatus(value)
     }
+
     return (
 
         <div>

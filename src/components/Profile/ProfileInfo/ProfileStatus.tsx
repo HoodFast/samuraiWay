@@ -1,5 +1,5 @@
-import React, {ChangeEvent, RefObject} from "react";
-import {updateStatus} from "../../../Redux/profile-reducer";
+import React, {ChangeEvent} from "react";
+
 
 type ProfileStatusPropsType = {
     active:boolean

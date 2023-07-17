@@ -1,11 +1,11 @@
-import {authType, meAPI, usersAPI} from "../api/api";
+import {meAPI} from "api/api";
 
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
 import {Dispatch} from "react";
 
 
-const SET_USER_DATA = 'SET-USER-DATA'
+const SET_USER_DATA = 'auth/SET-USER-DATA'
 export type authMeThunkType = ThunkAction<void, AppStateType, any, mainType>
 
 export type authUserType = {
@@ -38,45 +38,40 @@ type mainType =
 
 type followACType = ReturnType<typeof setAuth>
 
-export const setAuth = (id: number | null, login: string|null, email: string|null, isAuth: boolean) => {
+export const setAuth = (id: number | null, login: string | null, email: string | null, isAuth: boolean) => {
     return ({type: SET_USER_DATA, payload: {id, login, email, isAuth}} as const)
 }
 
 
 export const getMe = (): authMeThunkType => {
-    return (dispatch) => {
-        return meAPI.getMe().then((data) => {
-                if (data.resultCode === 0) {
-                    let {id, login, email} = data.data
-                    dispatch(setAuth(id, login, email, true))
-                }
-            }
-        )
+    return async (dispatch) => {
+        let res = await meAPI.getMe()
+        if (res.resultCode === 0) {
+            let {id, login, email} = res.data
+            dispatch(setAuth(id, login, email, true))
+        }
     }
 }
 
 
+export const login = (email: string, password: string, rememberMe: boolean, setFieldValue) => {
+    return async (dispatch: Dispatch<mainType>) => {
+        let res = await meAPI.login({email, password, rememberMe, captcha: true})
 
-export const login = (email: string, password: string, rememberMe: boolean,setFieldValue) => {
-    return (dispatch: Dispatch<mainType>) => {
-        meAPI.login({email, password, rememberMe, captcha: true}).then((response) => {
-
-            if (response.data.resultCode === 0) {
-                // @ts-ignore
-                dispatch(getMe())
-            }else{
-                setFieldValue("error", response.data.messages.join(" "))
-            }
-        })
+        if (res.data.resultCode === 0) {
+            // @ts-ignore
+            dispatch(getMe())
+        } else {
+            setFieldValue("error", res.data.messages.join(" "))
+        }
     }
 }
 
 export const logout = () => {
-    return (dispatch: Dispatch<mainType>) => {
-        meAPI.logout().then((response) => {
-            if (response.data.resultCode === 0) {
-                dispatch(setAuth(null, null, null, false))
-            }
-        })
+    return async (dispatch: Dispatch<mainType>) => {
+        let res = await meAPI.logout()
+        if (res.data.resultCode === 0) {
+            dispatch(setAuth(null, null, null, false))
+        }
     }
 }

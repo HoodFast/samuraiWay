@@ -1,10 +1,10 @@
 import React from "react";
 import {Profile} from "./Profile";
-import {AppStateType} from "../../Redux/redux-store";
+import {AppStateType} from "Redux/redux-store";
 import {connect} from "react-redux";
-import {getProfile, getStatus, propsProfileType, setUserProfile, updateStatus} from "../../Redux/profile-reducer";
+import {getProfile, getStatus, propsProfileType, setUserProfile, updateStatus} from "Redux/profile-reducer";
 import {Navigate, useParams} from 'react-router-dom';
-import {postType} from "../../App";
+import {postType} from "App";
 import {withAuthRedirect} from "../hoc/withAuthRedirect";
 import {compose} from "redux";
 
@@ -21,6 +21,7 @@ type profilePropsType = {
 type DispatchToPropsType = {
     getProfile: (profileId: number) => void
     getStatus: (profileId: number) => void
+    clean:()=>void
 }
 
 export type ProfilePropsTypePresent = profilePropsType & DispatchToPropsType
@@ -43,6 +44,8 @@ export class ProfileAPIContainer extends React.Component<ProfilePropsTypePresent
         this.props.getProfile(userId)
         this.props.getStatus(userId)
     }
+
+
 
     render() {
 

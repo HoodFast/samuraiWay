@@ -1,6 +1,6 @@
 import {v1} from "uuid";
-import {postType} from "../App";
-import {profileAPI} from "../api/api";
+import {postType} from "App";
+import {profileAPI} from "api/api";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
 
@@ -8,6 +8,7 @@ import {AppStateType} from "./redux-store";
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = "SET_STATUS"
+const REMOVE_POST = "REMOVE_POST"
 
 
 export type profileThunkType = ThunkAction<void, AppStateType, any, mainType>
@@ -53,7 +54,7 @@ let init: profilePageType = {
     status: "new status"
 }
 
-export const profileReducer = (state = init, action: mainType) => {
+export const profileReducer = (state = init, action: mainType): profilePageType => {
 
     switch (action.type) {
         case ADD_POST:
@@ -63,24 +64,27 @@ export const profileReducer = (state = init, action: mainType) => {
         case SET_USER_PROFILE:
             return {...state, profile: action.payload.profile}
         case SET_STATUS:
-
-            return {...state,status:action.payload.status}
+            return {...state, status: action.payload.status}
+        case REMOVE_POST:
+            return {...state, posts: state.posts.filter(i => i.id !== action.payload.id)}
         default:
             return state
     }
 }
 
-type mainType = addPostActionCreatorType |  setUserProfileType | setStatusType
+type mainType = addPostActionCreatorType | setUserProfileType | setStatusType | removePostType
 
 type addPostActionCreatorType = ReturnType<typeof addPost>
-
 type setUserProfileType = ReturnType<typeof setUserProfile>
 type setStatusType = ReturnType<typeof setStatus>
+type removePostType = ReturnType<typeof removePost>
 
 
-export const addPost = (newPost:string) => ({type: ADD_POST,payload:{newPost}} as const)
+
+export const addPost = (newPost: string) => ({type: ADD_POST, payload: {newPost}} as const)
 export const setUserProfile = (profile: propsProfileType) => ({type: SET_USER_PROFILE, payload: {profile}} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, payload: {status}} as const)
+export const removePost = (id: string) => ({type: REMOVE_POST, payload: {id}} as const)
 
 
 export const getProfile = (profileId: number): profileThunkType => {
@@ -102,7 +106,7 @@ export const getStatus = (profileId: number): profileThunkType => {
 
                 if (response.data) {
                     dispatch(setStatus(response.data))
-                }else{
+                } else {
                     dispatch(setStatus("Дебил"))
                 }
             }
