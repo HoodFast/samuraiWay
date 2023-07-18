@@ -1,54 +1,55 @@
 import React from "react";
 import s from './ProfileInfo.module.css'
-import {propsProfileType} from "../../../Redux/profile-reducer";
+import {propsProfileType} from "Redux/profile-reducer";
 import {Preloader} from "../../common/preloader/Preloader";
-import yes from'../../../assets/yes.jpg'
-import no from'../../../assets/no.jpg'
-import {ProfileStatus} from "./ProfileStatus";
+import yes from '../../../assets/yes.jpg'
+import no from '../../../assets/no.jpg'
 import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 
 
 type profileInfoProps = {
     profile: propsProfileType
-    status:string
-    updateStatus:(status:string)=>void
+    status: string
+    updateStatus: (status: string) => void
 }
 
-export const ProfileInfo = (props: profileInfoProps) => {
-    if(!props.profile){
+export const ProfileInfo: React.FC<profileInfoProps> = ({
+                                                            profile,
+                                                            status,
+                                                            updateStatus
+                                                        }) => {
+    if (!profile) {
         return <Preloader isFetching={true}/>
     }
-    let fName = props.profile.fullName
+    let fName = profile.fullName
 
-
+    for (let key in profile.contacts) {
+       return <p></p>
+    }
     return (
         <>
             <h3>
                 Имя пользователя: {fName}
             </h3>
-            <div>
-                {/*<img src='https://img2.akspic.ru/attachments/crops/0/7/6/9/39670/39670-ekstremalnyj_vid_sporta-Vozdushnyy_sharik-polety_na_vozdushnom_share-turizm-gora-3840x2160.jpg'/>*/}
-            </div>
 
-            <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
-            {/*<ProfileStatus active={true} status={props.status} updateStatus={props.updateStatus}/>*/}
+            <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
             <div>
-                В активном поиске работы: <img style={{width: 40}} src={props.profile.lookingForAJob? yes:no} />
+                В активном поиске работы: <img style={{width: 40}} src={profile.lookingForAJob ? yes : no}/>
             </div>
             <span>Контакты {fName}:</span>
             <div>
-                <p>{props.profile.contacts.facebook}</p>
-                <p>{props.profile.contacts.github}</p>
-                <p>{props.profile.contacts.vk}</p>
-                <p>{props.profile.contacts.instagram}</p>
-                <p>{props.profile.contacts.twitter}</p>
-                <p>{props.profile.contacts.website}</p>
-                <p>{props.profile.contacts.youtube}</p>
+                <p>{profile.contacts.facebook}</p>
+                <p>{profile.contacts.github}</p>
+                <p>{profile.contacts.vk}</p>
+                <p>{profile.contacts.instagram}</p>
+                <p>{profile.contacts.twitter}</p>
+                <p>{profile.contacts.website}</p>
+                <p>{profile.contacts.youtube}</p>
             </div>
 
 
             <div className={s.descriptionBlock}>
-                <img src={ props.profile.photos.large }/>
+                <img src={profile.photos.large}/>
             </div>
         </>
     )

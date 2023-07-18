@@ -4,8 +4,8 @@ import {
     setCurrentPage,
     unfollow,
     userPageType
-} from "../../Redux/user-reducer";
-import {AppStateType} from "../../Redux/redux-store";
+} from "Redux/user-reducer";
+import {AppStateType} from "Redux/redux-store";
 import React from "react";
 import {Users} from "./Users";
 import {Preloader} from "../common/preloader/Preloader";
@@ -15,9 +15,8 @@ import {
     getIsFetching,
     getPageSize,
     getTotalUsersCount,
-     getUsersReselect
-} from "../../Redux/users-selectors";
-
+    getUsersReselect
+} from "Redux/users-selectors";
 
 
 export type propsUsersType = {
@@ -37,7 +36,7 @@ type mapDispatchToPropsType = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void
     setCurrentPage: (pageId: number) => void
-    getUsers:(currentPage:number, pageSize:number)=>void
+    getUsers: (currentPage: number, pageSize: number) => void
 
 }
 
@@ -46,16 +45,13 @@ export type UsersPropsTypePresent = userPageType & mapDispatchToPropsType
 class UsersAPIComponent extends React.Component<UsersPropsTypePresent> {
 
     componentDidMount() {
-
-        this.props.getUsers(this.props.currentPage,
-            this.props.pageSize);
+        let {currentPage, pageSize, getUsers} = this.props
+        getUsers(currentPage, pageSize);
     }
 
     onPageChanged = (pageId: number) => {
-
-        this.props.getUsers(pageId,
-            this.props.pageSize);
-
+        let {getUsers, pageSize} = this.props
+        getUsers(pageId, pageSize);
     }
 
     render() {

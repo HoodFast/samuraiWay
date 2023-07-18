@@ -1,4 +1,5 @@
 import axios from "axios";
+import {propsUsersType} from "components/Users/UsersContainer";
 
 const instance = axios.create({
     withCredentials: true,
@@ -11,10 +12,21 @@ export type authType = {
     rememberMe: boolean
     captcha: boolean
 }
+type PhotosType={
+    small:string
+    large:string
+}
+
+
+export type ResponseUserType={
+    items: propsUsersType[]
+    totalCount: number,
+    error: string
+}
 
 export const usersAPI = {
     getUsers(currentPage: number, pageSize: number) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
+        return instance.get<ResponseUserType>(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => response.data)
     },
 

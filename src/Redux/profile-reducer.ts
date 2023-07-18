@@ -80,7 +80,6 @@ type setStatusType = ReturnType<typeof setStatus>
 type removePostType = ReturnType<typeof removePost>
 
 
-
 export const addPost = (newPost: string) => ({type: ADD_POST, payload: {newPost}} as const)
 export const setUserProfile = (profile: propsProfileType) => ({type: SET_USER_PROFILE, payload: {profile}} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, payload: {status}} as const)
@@ -88,41 +87,32 @@ export const removePost = (id: string) => ({type: REMOVE_POST, payload: {id}} as
 
 
 export const getProfile = (profileId: number): profileThunkType => {
-    return (dispatch) => {
-        profileAPI.getProfile(profileId).then(
-            (data) => {
+    return async (dispatch) => {
+        const res = await profileAPI.getProfile(profileId)
 
-                if (data.userId) {
-                    dispatch(setUserProfile(data))
-                }
-            }
-        )
+        if (res.userId) {
+            dispatch(setUserProfile(res))
+        }
+
     }
 }
 export const getStatus = (profileId: number): profileThunkType => {
-    return (dispatch) => {
-        profileAPI.getStatus(profileId).then(
-            (response) => {
-
-                if (response.data) {
-                    dispatch(setStatus(response.data))
-                } else {
-                    dispatch(setStatus("Дебил"))
-                }
-            }
-        )
+    return async (dispatch) => {
+        const res = await profileAPI.getStatus(profileId)
+        if (res.data) {
+            dispatch(setStatus(res.data))
+        } else {
+            dispatch(setStatus("----"))
+        }
     }
 }
-export const updateStatus = (status: string): profileThunkType => {
-    return (dispatch) => {
-        profileAPI.updateStatus(status).then(
-            (response) => {
 
-                if (response.data.resultCode === 0) {
-                    dispatch(setStatus(status))
-                }
-            }
-        )
+export const updateStatus = (status: string): profileThunkType => {
+    return async (dispatch) => {
+        const res = await profileAPI.updateStatus(status)
+        if (res.data.resultCode === 0) {
+            dispatch(setStatus(status))
+        }
     }
 }
 

@@ -1,7 +1,7 @@
-import s from "./users.module.css";
 import React from "react";
 import {propsUsersType} from "./UsersContainer";
-import {NavLink} from "react-router-dom";
+import {Paginator} from "components/common/Paginator/Paginator";
+import {User} from "components/Users/User";
 
 
 type usersProps = {
@@ -27,61 +27,26 @@ export const Users: React.FC<usersProps> = (
         follow,
         followingInProgress
     }) => {
-
-    let pagesCount = Math.ceil(totalUsersCount / pageSize)
-    if (pagesCount >= 10000) {
-        pagesCount = 10000
-    }
-    const pages: number[] = []
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i);
-    }
-
     return (
         <div>
-
+            <Paginator
+                totalUsersCount={totalUsersCount}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChanged={onPageChanged}/>
             <div>
-                {pages.map(el => <span key={el} onClick={() => onPageChanged(el)}
-                                       className={currentPage === el ? s.selectedPage : ''}> {el} </span>)}
+                {
+                    users.map((el) => {
+                        return (
+                            <User key={el.id}
+                                  user={el}
+                                  unfollow={unfollow}
+                                  follow={follow}
+                                  followingInProgress={followingInProgress}/>
+                        )
+                    })
+                }
             </div>
-            {
-                users.map((el) => {
-                    return (
-
-                        <div key={el.id}>
-                            <span>
-                                <div>
-                                    <NavLink to={"/profile/" + el.id}>
-                                    <img className={s.userPhoto}
-                                         src={el.photos.small ? el.photos.small : 'https://pixelbox.ru/wp-content/uploads/2021/02/mult-ava-instagram-58.jpg'}/>
-                                    </NavLink>
-                                </div>
-                                <div>
-                                    {el.followed ?
-                                        <button disabled={followingInProgress.some(id => id === el.id)}
-                                                onClick={() => {
-                                                    unfollow(el.id)
-                                                }}>Unfollow</button> :
-                                        <button disabled={followingInProgress.some(id => id === el.id)}
-                                                onClick={() => {
-                                                    follow(el.id)
-                                                }}>Follow</button>}
-                                </div>
-                            </span>
-                            <span>
-                                <span>
-                                    <div>
-                                        {el.name}
-                                    </div>
-                                    <div>
-                                        {el.status}
-                                    </div>
-                                </span>
-                            </span>
-                        </div>
-                    )
-                })
-            }
         </div>
     )
 }

@@ -6,8 +6,6 @@ export const getUsersList = (state: AppStateType) => {
     return state.usersPage.users
 }
 
-
-
 export const getUsersReselect = createSelector(getUsersList,items=>items.filter(u=>true))
 
 export const getPageSize = (state: AppStateType) => {
