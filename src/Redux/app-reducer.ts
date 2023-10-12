@@ -1,8 +1,8 @@
-import {authType, meAPI, usersAPI} from "../api/api";
+
 
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
-import {Dispatch} from "react";
+
 import {getMe} from "./auth-reducer";
 
 

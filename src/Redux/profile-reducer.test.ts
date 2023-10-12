@@ -1,5 +1,6 @@
-import {v1} from "uuid";
+
 import {addPost, profilePageType, profileReducer, removePost, setStatus} from "Redux/profile-reducer";
+
 
 
 let startState: profilePageType
@@ -56,3 +57,4 @@ test('length of messages shouldn`t be decrement if id is incorrect',()=>{
 
     expect(endState.posts.length).toBe(2)
 })
+
