@@ -5,7 +5,7 @@ import React, {useState} from "react";
 type usersProps = {
     totalItemsCount: number
     pageSize: number
-    currentPage: number
+    currentPage?: number
     onPageChanged: (el: number) => void
     portionSize?: number
 }

@@ -95,7 +95,7 @@ const mapStateToProps = (state: AppStateType): userPageType => {
 }
 
 
-export const UsersContainer = compose<React.ComponentType>(
+const UsersContainer = compose<React.ComponentType>(
     connect(mapStateToProps, {
         follow,
         unfollow,
@@ -103,3 +103,5 @@ export const UsersContainer = compose<React.ComponentType>(
         getUsers
     })
 )(UsersAPIComponent)
+
+export default UsersContainer

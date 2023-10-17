@@ -1,21 +1,28 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import './App.css';
-import {ProfileContainer, withRouter} from "components/Profile/ProfileContainer";
+import {withRouter} from "components/Profile/ProfileContainer";
 import {BrowserRouter, Route, Routes,} from "react-router-dom";
 import {News} from "components/News/News";
 import {Music} from "components/Music/Music";
 import {Settings} from "components/Settings/Settings";
 import {dialogType, messageType} from "Redux/store";
 import {NavbarContainer} from "components/Navbar/NavbarContainer";
-import {UsersContainer} from "components/Users/UsersContainer";
+
 import {HeaderContainer} from "components/Header/HeaderContainer";
 import {LoginContainer} from "components/Login/Login";
-import {DialogsContainer} from "components/Dialogs/DialogsContainer";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "Redux/app-reducer";
 import {AppStateType, store} from "Redux/redux-store";
 import {Preloader} from "components/common/preloader/Preloader";
+
+const DialogsContainer = React.lazy(()=> import('components/Dialogs/DialogsContainer').then(
+    ({DialogsContainer})=>({default:DialogsContainer})
+))
+const ProfileContainer = React.lazy(()=> import('components/Profile/ProfileContainer').then(
+    ({ProfileContainer})=>({default:ProfileContainer})
+))
+const UsersContainer = React.lazy(()=> import('components/Users/UsersContainer'))
 
 
 export type dialogsPageType = {
