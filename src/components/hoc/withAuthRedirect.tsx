@@ -20,12 +20,6 @@ export function withAuthRedirect<T>(Component: ComponentType<T>) {
         if (!isAuth) return <Navigate to={'/login'}/>
         return <Component {...restProps as T & {} }/>
     }
-    // class RedirectComponent extends React.Component<any, any>{
-    //     render(){
-    //         if(!this.props.isAuth) return <Navigate to={'/login'}/>
-    //         return <Component {...this.props}/>
-    //     }
-    // }
 
     let ConnectedAuthRedirectComponent = connect(mapStateToPropsForRedirect)(RedirectComponent)
 

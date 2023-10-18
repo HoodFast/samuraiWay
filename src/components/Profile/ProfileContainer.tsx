@@ -3,9 +3,8 @@ import {Profile} from "./Profile";
 import {AppStateType} from "Redux/redux-store";
 import {connect} from "react-redux";
 import {getProfile, getStatus, propsProfileType, setUserProfile, updateStatus} from "Redux/profile-reducer";
-import {Navigate, useParams} from 'react-router-dom';
+import { useParams} from 'react-router-dom';
 import {postType} from "App";
-import {withAuthRedirect} from "../hoc/withAuthRedirect";
 import {compose} from "redux";
 
 
@@ -70,7 +69,7 @@ export const ProfileContainer = compose<React.ComponentType>(
         getStatus,
         updateStatus
     }),
-    // withAuthRedirect,
+
     withRouter
 )(ProfileAPIContainer)
 
