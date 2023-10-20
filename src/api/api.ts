@@ -3,7 +3,10 @@ import {propsUsersType} from "components/Users/UsersContainer";
 
 const instance = axios.create({
     withCredentials: true,
-    baseURL: `https://social-network.samuraijs.com/api/1.0/`
+    baseURL: `https://social-network.samuraijs.com/api/1.0/`,
+    headers: {
+        "API-KEY":'1078d21f-e502-4df3-adb0-f8556c144721'
+    }
 })
 
 export type authType = {
