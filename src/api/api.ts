@@ -1,5 +1,6 @@
 import axios from "axios";
 import {propsUsersType} from "components/Users/UsersContainer";
+import {logout} from "../Redux/auth-reducer";
 
 const instance = axios.create({
     withCredentials: true,
@@ -58,6 +59,12 @@ export const profileAPI = {
     },
     updateStatus(status) {
         return instance.put(`profile/status/`, {status})
+    },
+    updatePhoto(photo) {
+
+        let formData = new FormData()
+        formData.append("image", photo)
+        return instance.put(`profile/photo/`, formData)
     }
 }
 

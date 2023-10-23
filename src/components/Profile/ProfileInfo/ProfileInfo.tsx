@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import s from './ProfileInfo.module.css'
 import {propsProfileType} from "Redux/profile-reducer";
 import {Preloader} from "../../common/preloader/Preloader";
@@ -8,12 +8,16 @@ import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 
 
 type profileInfoProps = {
+    isOwner: boolean
     profile: propsProfileType
     status: string
     updateStatus: (status: string) => void
+    savePhoto: (file:any)=>void
 }
 
 export const ProfileInfo: React.FC<profileInfoProps> = ({
+                                                            savePhoto,
+                                                            isOwner,
                                                             profile,
                                                             status,
                                                             updateStatus
@@ -22,9 +26,10 @@ export const ProfileInfo: React.FC<profileInfoProps> = ({
         return <Preloader isFetching={true}/>
     }
     let fName = profile.fullName
-
-    for (let key in profile.contacts) {
-       return <p></p>
+    const mainPhotoSelect = (e: ChangeEvent<HTMLInputElement>) => {
+        if (!!e.target.files) {
+            savePhoto(e.target.files[0])
+        }
     }
     return (
         <>
@@ -49,7 +54,9 @@ export const ProfileInfo: React.FC<profileInfoProps> = ({
 
 
             <div className={s.descriptionBlock}>
-                <img src={profile.photos.large}/>
+                <img className={s.mainPhoto}
+                     src={profile.photos.large || 'https://pixelbox.ru/wp-content/uploads/2021/02/mult-ava-instagram-58.jpg'}/>
+                {isOwner && <input type={"file"} onChange={mainPhotoSelect}/>}
             </div>
         </>
     )

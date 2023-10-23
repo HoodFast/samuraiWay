@@ -9,11 +9,14 @@ const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = "SET_STATUS"
 const REMOVE_POST = "REMOVE_POST"
-
+const UPDATE_PHOTO = "UPDATE_PHOTO"
 
 export type profileThunkType = ThunkAction<void, AppStateType, any, mainType>
 export type getStatusType = ThunkAction<void, string, any, mainType>
-
+type photosType = {
+    small: string
+    large: string
+}
 export type propsProfileType =
     {
         userId: number
@@ -67,24 +70,31 @@ export const profileReducer = (state = init, action: mainType): profilePageType 
             return {...state, status: action.payload.status}
         case REMOVE_POST:
             return {...state, posts: state.posts.filter(i => i.id !== action.payload.id)}
+        case UPDATE_PHOTO:
+
+debugger
+            // @ts-ignore
+            return {...state, profile: {...state.profile, photos: action.payload.photos},
+            }
         default:
             return state
     }
 }
 
-type mainType = addPostActionCreatorType | setUserProfileType | setStatusType | removePostType
+type mainType = addPostActionCreatorType | setUserProfileType | setStatusType | removePostType | updatePhotoType
 
 type addPostActionCreatorType = ReturnType<typeof addPost>
 type setUserProfileType = ReturnType<typeof setUserProfile>
 type setStatusType = ReturnType<typeof setStatus>
 type removePostType = ReturnType<typeof removePost>
+type updatePhotoType = ReturnType<typeof updatePhoto>
 
 
 export const addPost = (newPost: string) => ({type: ADD_POST, payload: {newPost}} as const)
 export const setUserProfile = (profile: propsProfileType) => ({type: SET_USER_PROFILE, payload: {profile}} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, payload: {status}} as const)
 export const removePost = (id: string) => ({type: REMOVE_POST, payload: {id}} as const)
-
+export const updatePhoto = (photos: photosType) => ({type: UPDATE_PHOTO, payload: {photos}} as const)
 
 export const getProfile = (profileId: number): profileThunkType => {
     return async (dispatch) => {
@@ -112,6 +122,16 @@ export const updateStatus = (status: string): profileThunkType => {
         const res = await profileAPI.updateStatus(status)
         if (res.data.resultCode === 0) {
             dispatch(setStatus(status))
+        }
+    }
+}
+
+export const savePhoto = (photos: photosType): profileThunkType => {
+    return async (dispatch) => {
+        const res = await profileAPI.updatePhoto(photos)
+
+        if (res.data.resultCode === 0) {
+            dispatch(updatePhoto(res.data.data.photos))
         }
     }
 }
