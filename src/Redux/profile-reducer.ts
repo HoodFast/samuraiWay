@@ -23,6 +23,7 @@ export type propsProfileType =
         lookingForAJob: boolean
         lookingForAJobDescription: string
         fullName: string
+        aboutMe:string
         contacts: {
             github: string
             vk: string

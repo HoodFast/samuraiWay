@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useState} from "react";
 import s from './ProfileInfo.module.css'
 import {propsProfileType} from "Redux/profile-reducer";
 import {Preloader} from "../../common/preloader/Preloader";
@@ -12,7 +12,7 @@ type profileInfoProps = {
     profile: propsProfileType
     status: string
     updateStatus: (status: string) => void
-    savePhoto: (file:any)=>void
+    savePhoto: (file: any) => void
 }
 
 export const ProfileInfo: React.FC<profileInfoProps> = ({
@@ -20,44 +20,82 @@ export const ProfileInfo: React.FC<profileInfoProps> = ({
                                                             isOwner,
                                                             profile,
                                                             status,
-                                                            updateStatus
+                                                            updateStatus,
                                                         }) => {
+    let [editMode, setEditMode] = useState<boolean>(false)
+
     if (!profile) {
         return <Preloader isFetching={true}/>
     }
-    let fName = profile.fullName
     const mainPhotoSelect = (e: ChangeEvent<HTMLInputElement>) => {
         if (!!e.target.files) {
             savePhoto(e.target.files[0])
         }
     }
+
     return (
         <>
-            <h3>
-                Имя пользователя: {fName}
-            </h3>
-
-            <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
-            <div>
-                В активном поиске работы: <img style={{width: 40}} src={profile.lookingForAJob ? yes : no}/>
-            </div>
-            <span>Контакты {fName}:</span>
-            <div>
-                <p>{profile.contacts.facebook}</p>
-                <p>{profile.contacts.github}</p>
-                <p>{profile.contacts.vk}</p>
-                <p>{profile.contacts.instagram}</p>
-                <p>{profile.contacts.twitter}</p>
-                <p>{profile.contacts.website}</p>
-                <p>{profile.contacts.youtube}</p>
-            </div>
-
 
             <div className={s.descriptionBlock}>
                 <img className={s.mainPhoto}
                      src={profile.photos.large || 'https://pixelbox.ru/wp-content/uploads/2021/02/mult-ava-instagram-58.jpg'}/>
                 {isOwner && <input type={"file"} onChange={mainPhotoSelect}/>}
             </div>
+            {editMode ? <ProfileDataForm/> :
+                <ProfileData profile={profile} setEditMode={setEditMode} editMode={editMode} isOwner={isOwner}/>
+
+            }
+            <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
         </>
     )
+}
+
+const Contact = ({contactTitle, contactValue}) => {
+    return <div className={s.contact}><b>{contactTitle}</b>: {contactValue}</div>
+}
+
+
+type ProfileDataType = {
+    profile: propsProfileType
+    isOwner: boolean
+    editMode: boolean
+    setEditMode: (value: boolean) => void
+
+}
+
+const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, editMode, setEditMode}) => {
+    let fName = profile.fullName
+
+    return (
+        <div>
+            <div>{!editMode && isOwner && <button onClick={() => setEditMode(true)}>EditMode</button>}</div>
+            <h3>
+                Имя пользователя: {fName}
+            </h3>
+
+
+            <div>
+                <b>В активном поиске работы:</b> <img style={{width: 40}} src={profile.lookingForAJob ? yes : no}/>
+            </div>
+            <div>
+                <b>About me:</b> {profile.aboutMe}
+            </div>
+            {profile.lookingForAJob &&
+                <div>
+                    <b>My skills:</b> {profile.lookingForAJobDescription}
+                </div>
+            }
+
+            <span>Контакты {fName}:</span>{Object.keys(profile.contacts).map(key => {
+            return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
+        })}
+
+        </div>
+    )
+
+}
+
+
+const ProfileDataForm = () => {
+    return <div></div>
 }
