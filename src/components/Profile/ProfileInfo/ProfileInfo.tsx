@@ -5,6 +5,8 @@ import {Preloader} from "../../common/preloader/Preloader";
 import yes from '../../../assets/yes.jpg'
 import no from '../../../assets/no.jpg'
 import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
+import {ProfileDataForm} from "./ProfileDataForm/ProfileDataForm";
+
 
 
 type profileInfoProps = {
@@ -41,7 +43,7 @@ export const ProfileInfo: React.FC<profileInfoProps> = ({
                      src={profile.photos.large || 'https://pixelbox.ru/wp-content/uploads/2021/02/mult-ava-instagram-58.jpg'}/>
                 {isOwner && <input type={"file"} onChange={mainPhotoSelect}/>}
             </div>
-            {editMode ? <ProfileDataForm/> :
+            {editMode ? <ProfileDataForm profile={profile}/> :
                 <ProfileData profile={profile} setEditMode={setEditMode} editMode={editMode} isOwner={isOwner}/>
 
             }
@@ -57,13 +59,13 @@ const Contact = ({contactTitle, contactValue}) => {
 
 type ProfileDataType = {
     profile: propsProfileType
-    isOwner: boolean
+    isOwner?: boolean
     editMode: boolean
     setEditMode: (value: boolean) => void
 
 }
 
-const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, editMode, setEditMode}) => {
+const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner=false, editMode, setEditMode}) => {
     let fName = profile.fullName
 
     return (
@@ -96,6 +98,3 @@ const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, editMode, set
 }
 
 
-const ProfileDataForm = () => {
-    return <div></div>
-}
