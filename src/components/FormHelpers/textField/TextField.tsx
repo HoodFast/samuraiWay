@@ -9,29 +9,30 @@ export type textFieldPropsType = {
 } & ComponentPropsWithoutRef<'input'>
 
 export const TextField: FC<textFieldPropsType> = ({
-                                                            placeholder,
-                                                            errorMessage,
-                                                            label,
-                                                            onChange,
-                                                            value,
-                                                            onValueChange,
-                                                            ...rest
-                                                        }) => {
+                                                      placeholder,
+                                                      errorMessage,
+                                                      label,
+                                                      onChange,
+                                                      value,
+                                                      onValueChange,
+                                                      ...rest
+                                                  }) => {
 
 
     return (
-        <div>
-            <label>
-                {label}
-                <input
-                    placeholder={placeholder}
-                    type={'text'}
-                    onChange={onChange}
-                    value={value}
-                    {...rest}
-                />
-                {errorMessage && <div>{errorMessage}</div>}
-            </label>
-        </div>
+        <>
+                <label>
+
+                    <input
+                        placeholder={placeholder}
+                        type={'text'}
+                        onChange={onChange}
+                        value={value}
+                        {...rest}
+                    />
+
+                </label>
+            {errorMessage && <div>{errorMessage}</div>}
+        </>
     )
 }

@@ -43,11 +43,12 @@ export const ProfileInfo: React.FC<profileInfoProps> = ({
                      src={profile.photos.large || 'https://pixelbox.ru/wp-content/uploads/2021/02/mult-ava-instagram-58.jpg'}/>
                 {isOwner && <input type={"file"} onChange={mainPhotoSelect}/>}
             </div>
+            <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
             {editMode ? <ProfileDataForm profile={profile}/> :
                 <ProfileData profile={profile} setEditMode={setEditMode} editMode={editMode} isOwner={isOwner}/>
 
             }
-            <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
+
         </>
     )
 }
