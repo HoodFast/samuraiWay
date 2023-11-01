@@ -19,12 +19,12 @@ type photosType = {
 }
 export type propsProfileType =
     {
-        userId: number
-        lookingForAJob: boolean
+        userId?: number
+        lookingForAJob?: boolean
         lookingForAJobDescription: string
         fullName: string
-        aboutMe:string
-        contacts: {
+        aboutMe: string
+        contacts?: {
             github: string
             vk: string
             facebook: string
@@ -35,7 +35,7 @@ export type propsProfileType =
             mainLink: string
         }
 
-        photos: {
+        photos?: {
             small: string
             large: string
         }
@@ -72,10 +72,8 @@ export const profileReducer = (state = init, action: mainType): profilePageType 
         case REMOVE_POST:
             return {...state, posts: state.posts.filter(i => i.id !== action.payload.id)}
         case UPDATE_PHOTO:
-
-debugger
             // @ts-ignore
-            return {...state, profile: {...state.profile, photos: action.payload.photos},
+            return { ...state, profile: {...state.profile, photos: action.payload.photos},
             }
         default:
             return state
@@ -133,6 +131,15 @@ export const savePhoto = (photos: photosType): profileThunkType => {
 
         if (res.data.resultCode === 0) {
             dispatch(updatePhoto(res.data.data.photos))
+        }
+    }
+}
+export const saveProfile = (profile: propsProfileType): profileThunkType => {
+    return async (dispatch) => {
+        const res = await profileAPI.saveProfile(profile)
+
+        if (res.data.resultCode === 0) {
+
         }
     }
 }

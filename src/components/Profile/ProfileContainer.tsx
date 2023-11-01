@@ -9,7 +9,7 @@ import {
     setUserProfile,
     updateStatus,
     updatePhoto,
-    savePhoto
+    savePhoto, saveProfile
 } from "Redux/profile-reducer";
 import {useParams} from 'react-router-dom';
 import {postType} from "App";
@@ -88,7 +88,8 @@ export const ProfileContainer = compose<React.ComponentType>(
         getProfile,
         getStatus,
         updateStatus,
-        savePhoto
+        savePhoto,
+        saveProfile
     }),
 
     withRouter

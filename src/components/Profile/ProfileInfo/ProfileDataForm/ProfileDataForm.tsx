@@ -7,7 +7,10 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {ControlledCheckbox} from "../../../FormHelpers/checkBox/ControlCheckBox";
 import s from './ProfileDataForm.module.scss'
 
-type ProfileDataFormType = { profile: propsProfileType }
+type ProfileDataFormType = {
+    profile: propsProfileType
+    saveProfile: (profile: propsProfileType) => void
+}
 
 const schema = z.object({
     name: z.string().min(6),
@@ -17,12 +20,10 @@ const schema = z.object({
 })
 
 type FormValues = z.input<typeof schema>
-export const ProfileDataForm: FC<ProfileDataFormType> = ({profile}) => {
+export const ProfileDataForm: FC<ProfileDataFormType> = ({profile,saveProfile}) => {
     const {
-        register,
         handleSubmit,
         control,
-        formState: {errors},
     } = useForm<FormValues>({
         resolver: zodResolver(schema),
         defaultValues: {
@@ -34,12 +35,11 @@ export const ProfileDataForm: FC<ProfileDataFormType> = ({profile}) => {
         },
     })
     const onSubmit = (data: FormValues) => {
-        console.log(data)
+        saveProfile({...data,fullName:profile.fullName})
     }
 
     return <form onSubmit={handleSubmit(onSubmit)}>
-        <button type={'submit'} onClick={() => {
-        }}>Submit
+        <button type={'submit'}>Submit
         </button>
         <div className={s.name}>
             <h3 className={s.field}>Имя пользователя:</h3> <ControlledTextField control={control}
@@ -58,7 +58,7 @@ export const ProfileDataForm: FC<ProfileDataFormType> = ({profile}) => {
                 as={'textarea'}/>
         </div>
         <div className={s.name}>
-            <h3 className={s.field}>About me:</h3> <ControlledTextField control={control}
+            <h3 className={s.field}>About me:</h3> <ControlledTextField as={'textarea'} control={control}
                                                                         name={'aboutMe'}/>{profile.aboutMe}
         </div>
     </form>

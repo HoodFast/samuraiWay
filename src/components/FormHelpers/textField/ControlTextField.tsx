@@ -1,14 +1,17 @@
 import {TextField, textFieldPropsType} from "./TextField";
 import {Control, FieldPath, FieldValues, useController} from "react-hook-form";
+import {ElementType} from "react";
 
 
 export type ControlledTextFieldType<T extends FieldValues> = {
     control: Control<T>
     name: FieldPath<T>
-} & Omit<textFieldPropsType, 'onChange' | 'value' | 'id'>
+    as?:ElementType
+} & Omit<textFieldPropsType, 'errorMessage' | 'id' | 'as'>
 export const ControlledTextField = <T extends FieldValues>({
                                                                control,
                                                                name,
+                                                               as,
                                                                ...restProps
                                                            }: ControlledTextFieldType<T>) => {
     const {
@@ -16,5 +19,5 @@ export const ControlledTextField = <T extends FieldValues>({
         fieldState: {error},
     } = useController({control, name})
 
-    return <TextField {...field} errorMessage={error?.message} id={name} {...restProps} />
+    return <TextField {...field} as={as} errorMessage={error?.message} id={name} {...restProps} />
 }

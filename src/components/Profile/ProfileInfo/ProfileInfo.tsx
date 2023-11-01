@@ -8,13 +8,13 @@ import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 import {ProfileDataForm} from "./ProfileDataForm/ProfileDataForm";
 
 
-
 type profileInfoProps = {
     isOwner: boolean
     profile: propsProfileType
     status: string
     updateStatus: (status: string) => void
     savePhoto: (file: any) => void
+    saveProfile: (profile: propsProfileType) => void
 }
 
 export const ProfileInfo: React.FC<profileInfoProps> = ({
@@ -23,6 +23,7 @@ export const ProfileInfo: React.FC<profileInfoProps> = ({
                                                             profile,
                                                             status,
                                                             updateStatus,
+                                                            saveProfile
                                                         }) => {
     let [editMode, setEditMode] = useState<boolean>(false)
 
@@ -34,17 +35,16 @@ export const ProfileInfo: React.FC<profileInfoProps> = ({
             savePhoto(e.target.files[0])
         }
     }
-
     return (
         <>
 
             <div className={s.descriptionBlock}>
                 <img className={s.mainPhoto}
-                     src={profile.photos.large || 'https://pixelbox.ru/wp-content/uploads/2021/02/mult-ava-instagram-58.jpg'}/>
+                     src={profile.photos?.large || 'https://pixelbox.ru/wp-content/uploads/2021/02/mult-ava-instagram-58.jpg'}/>
                 {isOwner && <input type={"file"} onChange={mainPhotoSelect}/>}
             </div>
             <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
-            {editMode ? <ProfileDataForm profile={profile}/> :
+            {editMode ? <ProfileDataForm saveProfile={saveProfile} profile={profile}/> :
                 <ProfileData profile={profile} setEditMode={setEditMode} editMode={editMode} isOwner={isOwner}/>
 
             }
@@ -66,7 +66,7 @@ type ProfileDataType = {
 
 }
 
-const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner=false, editMode, setEditMode}) => {
+const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner = false, editMode, setEditMode}) => {
     let fName = profile.fullName
 
     return (
@@ -88,9 +88,11 @@ const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner=false, editMod
                     <b>My skills:</b> {profile.lookingForAJobDescription}
                 </div>
             }
+            <span>Контакты {fName}:</span>
+            {profile.contacts && Object.keys(profile.contacts).map(key => {
 
-            <span>Контакты {fName}:</span>{Object.keys(profile.contacts).map(key => {
-            return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
+            // @ts-ignore
+                return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
         })}
 
         </div>

@@ -1,7 +1,7 @@
 import {ComponentPropsWithoutRef, ElementType} from 'react'
 
 
-export type textFieldPropsType<T extends ElementType ='textarea'> = {
+export type textFieldPropsType<T extends ElementType ='input'> = {
     as?: T
     placeholder?: string
     errorMessage?: string

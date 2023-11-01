@@ -1,6 +1,7 @@
 import axios from "axios";
 import {propsUsersType} from "components/Users/UsersContainer";
 import {logout} from "../Redux/auth-reducer";
+import {propsProfileType} from "../Redux/profile-reducer";
 
 const instance = axios.create({
     withCredentials: true,
@@ -65,6 +66,9 @@ export const profileAPI = {
         let formData = new FormData()
         formData.append("image", photo)
         return instance.put(`profile/photo/`, formData)
+    },
+    saveProfile(profile: propsProfileType){
+        return instance.put(`profile/`, profile)
     }
 }
 
