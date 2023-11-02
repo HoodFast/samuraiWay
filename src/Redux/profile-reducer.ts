@@ -10,6 +10,7 @@ const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = "SET_STATUS"
 const REMOVE_POST = "REMOVE_POST"
 const UPDATE_PHOTO = "UPDATE_PHOTO"
+const SET_EDIT_MODE = "SET_EDIT_MODE"
 
 export type profileThunkType = ThunkAction<void, AppStateType, any, mainType>
 export type getStatusType = ThunkAction<void, string, any, mainType>
@@ -46,6 +47,7 @@ export type profilePageType = {
     posts: postType[]
     profile: propsProfileType | null
     status: string
+    editMode: boolean
 }
 
 let init: profilePageType = {
@@ -55,7 +57,8 @@ let init: profilePageType = {
         {id: v1(), message: "hello world", likesCount: 5},
     ],
     profile: null,
-    status: "new status"
+    status: "new status",
+    editMode: false
 }
 
 export const profileReducer = (state = init, action: mainType): profilePageType => {
@@ -73,20 +76,29 @@ export const profileReducer = (state = init, action: mainType): profilePageType 
             return {...state, posts: state.posts.filter(i => i.id !== action.payload.id)}
         case UPDATE_PHOTO:
             // @ts-ignore
-            return { ...state, profile: {...state.profile, photos: action.payload.photos},
+            return {...state, profile: {...state.profile, photos: action.payload.photos},
             }
+        case SET_EDIT_MODE:
+            return {...state, editMode: action.payload.value}
         default:
             return state
     }
 }
 
-type mainType = addPostActionCreatorType | setUserProfileType | setStatusType | removePostType | updatePhotoType
+type mainType =
+    addPostActionCreatorType
+    | setUserProfileType
+    | setStatusType
+    | removePostType
+    | updatePhotoType
+    | setEditModeType
 
 type addPostActionCreatorType = ReturnType<typeof addPost>
 type setUserProfileType = ReturnType<typeof setUserProfile>
 type setStatusType = ReturnType<typeof setStatus>
 type removePostType = ReturnType<typeof removePost>
 type updatePhotoType = ReturnType<typeof updatePhoto>
+type setEditModeType = ReturnType<typeof setEditMode>
 
 
 export const addPost = (newPost: string) => ({type: ADD_POST, payload: {newPost}} as const)
@@ -94,6 +106,7 @@ export const setUserProfile = (profile: propsProfileType) => ({type: SET_USER_PR
 export const setStatus = (status: string) => ({type: SET_STATUS, payload: {status}} as const)
 export const removePost = (id: string) => ({type: REMOVE_POST, payload: {id}} as const)
 export const updatePhoto = (photos: photosType) => ({type: UPDATE_PHOTO, payload: {photos}} as const)
+export const setEditMode = (value: boolean) => ({type: SET_EDIT_MODE, payload: {value}} as const)
 
 export const getProfile = (profileId: number): profileThunkType => {
     return async (dispatch) => {
@@ -135,11 +148,12 @@ export const savePhoto = (photos: photosType): profileThunkType => {
     }
 }
 export const saveProfile = (profile: propsProfileType): profileThunkType => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
+
         const res = await profileAPI.saveProfile(profile)
-
+        const userId = getState().auth.id
         if (res.data.resultCode === 0) {
-
+            dispatch(setEditMode(false))
         }
     }
 }

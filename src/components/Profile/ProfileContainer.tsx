@@ -9,7 +9,7 @@ import {
     setUserProfile,
     updateStatus,
     updatePhoto,
-    savePhoto, saveProfile
+    savePhoto, saveProfile, setEditMode
 } from "Redux/profile-reducer";
 import {useParams} from 'react-router-dom';
 import {postType} from "App";
@@ -78,7 +78,8 @@ const mapStateToProps = (state: AppStateType) => {
         posts: state.profilePage.posts,
         profile: state.profilePage.profile,
         status: state.profilePage.status,
-        authorisedUserId: state.auth.id
+        authorisedUserId: state.auth.id,
+        editMode:state.profilePage.editMode
     }
 }
 
@@ -89,7 +90,8 @@ export const ProfileContainer = compose<React.ComponentType>(
         getStatus,
         updateStatus,
         savePhoto,
-        saveProfile
+        saveProfile,
+        setEditMode
     }),
 
     withRouter

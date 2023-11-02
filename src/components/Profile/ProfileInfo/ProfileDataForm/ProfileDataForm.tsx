@@ -9,33 +9,36 @@ import s from './ProfileDataForm.module.scss'
 
 type ProfileDataFormType = {
     profile: propsProfileType
-    saveProfile: (profile: propsProfileType) => void
+    saveProfile: (profile: propsProfileType,setEditMode) => void
+    setEditMode:(value:boolean)=>void
 }
 
 const schema = z.object({
-    name: z.string().min(6),
+    fullName: z.string().min(6),
     lookingForAJob: z.boolean().optional(),
     lookingForAJobDescription: z.string().min(6),
     aboutMe: z.string().min(6),
 })
 
 type FormValues = z.input<typeof schema>
-export const ProfileDataForm: FC<ProfileDataFormType> = ({profile,saveProfile}) => {
+export const ProfileDataForm: FC<ProfileDataFormType> = ({profile,saveProfile,setEditMode}) => {
     const {
         handleSubmit,
         control,
     } = useForm<FormValues>({
         resolver: zodResolver(schema),
         defaultValues: {
-            name: profile.fullName,
+            fullName: profile.fullName,
             lookingForAJob: profile.lookingForAJob,
             lookingForAJobDescription: profile.lookingForAJobDescription,
             aboutMe: profile.aboutMe,
 
         },
     })
-    const onSubmit = (data: FormValues) => {
-        saveProfile({...data,fullName:profile.fullName})
+    const onSubmit =  (data: FormValues) => {
+        saveProfile({...data},setEditMode)
+
+        setEditMode(false)
     }
 
     return <form onSubmit={handleSubmit(onSubmit)}>
@@ -43,7 +46,7 @@ export const ProfileDataForm: FC<ProfileDataFormType> = ({profile,saveProfile}) 
         </button>
         <div className={s.name}>
             <h3 className={s.field}>Имя пользователя:</h3> <ControlledTextField control={control}
-                                                                                name={'name'}/><span>{profile.fullName}</span>
+                                                                                name={'fullName'}/>
         </div>
         <div className={s.name}>
             <h3 className={s.field}>В активном поиске работы:</h3> <ControlledCheckbox control={control}
