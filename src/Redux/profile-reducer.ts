@@ -153,6 +153,7 @@ export const saveProfile = (profile: propsProfileType): profileThunkType => {
         const res = await profileAPI.saveProfile(profile)
         const userId = getState().auth.id
         if (res.data.resultCode === 0) {
+            userId && dispatch(getProfile(userId))
             dispatch(setEditMode(false))
         }
     }

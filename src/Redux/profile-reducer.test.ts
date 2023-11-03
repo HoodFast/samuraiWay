@@ -14,7 +14,8 @@ beforeEach(() => {
             {id: "2", message: "hello world", likesCount: 5},
         ],
         profile: null,
-        status: "new status"
+        status: "new status",
+        editMode: false
     }
 })
 

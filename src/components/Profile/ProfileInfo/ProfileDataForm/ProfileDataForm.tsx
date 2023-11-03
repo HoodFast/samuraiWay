@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import {propsProfileType} from "../../../../Redux/profile-reducer";
 import {ControlledTextField} from "../../../FormHelpers/textField/ControlTextField";
-import {useForm} from "react-hook-form";
+import {useFieldArray, useForm} from "react-hook-form";
 import {z} from 'zod'
 import {zodResolver} from "@hookform/resolvers/zod";
 import {ControlledCheckbox} from "../../../FormHelpers/checkBox/ControlCheckBox";
@@ -9,8 +9,8 @@ import s from './ProfileDataForm.module.scss'
 
 type ProfileDataFormType = {
     profile: propsProfileType
-    saveProfile: (profile: propsProfileType,setEditMode) => void
-    setEditMode:(value:boolean)=>void
+    saveProfile: (profile: propsProfileType, setEditMode) => void
+    setEditMode: (value: boolean) => void
 }
 
 const schema = z.object({
@@ -21,7 +21,7 @@ const schema = z.object({
 })
 
 type FormValues = z.input<typeof schema>
-export const ProfileDataForm: FC<ProfileDataFormType> = ({profile,saveProfile,setEditMode}) => {
+export const ProfileDataForm: FC<ProfileDataFormType> = ({profile, saveProfile, setEditMode}) => {
     const {
         handleSubmit,
         control,
@@ -32,12 +32,11 @@ export const ProfileDataForm: FC<ProfileDataFormType> = ({profile,saveProfile,se
             lookingForAJob: profile.lookingForAJob,
             lookingForAJobDescription: profile.lookingForAJobDescription,
             aboutMe: profile.aboutMe,
-
         },
     })
-    const onSubmit =  (data: FormValues) => {
-        saveProfile({...data},setEditMode)
-
+    
+    const onSubmit = (data: FormValues) => {
+        saveProfile({...data}, setEditMode)
         setEditMode(false)
     }
 
@@ -62,7 +61,20 @@ export const ProfileDataForm: FC<ProfileDataFormType> = ({profile,saveProfile,se
         </div>
         <div className={s.name}>
             <h3 className={s.field}>About me:</h3> <ControlledTextField as={'textarea'} control={control}
-                                                                        name={'aboutMe'}/>{profile.aboutMe}
+                                                                        name={'aboutMe'}/>
+        </div>
+
+        <div>
+            <b>Contacts</b>: {profile.contacts && Object.keys(profile.contacts).map(key => {
+
+        })}
         </div>
     </form>
 }
+
+const contactSchema = z.object({
+    contact: z.string().min(6),
+})
+
+type contactValues = z.input<typeof contactSchema>
+
