@@ -38,7 +38,15 @@ const schema = z.object({
     fullName: z.string().min(6),
     lookingForAJob: z.boolean().optional(),
     lookingForAJobDescription: z.string().min(6),
-    aboutMe: z.string().min(6)
+    aboutMe: z.string().min(6),
+    contacts:z.object({github: z.string().optional(),
+        vk: z.string().optional(),
+        facebook: z.string().optional(),
+        instagram: z.string().optional(),
+        twitter: z.string().optional(),
+        website: z.string().optional(),
+        youtube: z.string().optional(),
+        mainLink: z.string().optional()})
 })
 
 // type FormValues = z.input<typeof schema>
@@ -54,7 +62,7 @@ export const ProfileDataForm: FC<ProfileDataFormType> = ({profile, saveProfile, 
     })
     const {control, handleSubmit, reset} = methods
     const onSubmit = (data: any) => {
-
+        console.log(data)
         saveProfile({...data}, setEditMode)
         setEditMode(false)
     }
@@ -90,7 +98,7 @@ export const ProfileDataForm: FC<ProfileDataFormType> = ({profile, saveProfile, 
 
             {profile.contacts && Object.keys(profile.contacts).map((field) => {
                 // @ts-ignore
-                return <div style={{margin:'10px'}} ><ControlledTextField style={{display:'flex', justifyContent:'space-around'}} label={field+":"} value={profile.contacts[field]} control={control} name={'contacts.'+field}/></div>
+                return <div style={{margin:'10px'}} ><ControlledTextField style={{display:'flex', justifyContent:'space-around'}} label={field+":"} defaultValue={profile.contacts[field]} control={control} name={'contacts.'+field}/></div>
 
             })}
         </div>
