@@ -71,6 +71,7 @@ type ProfileDataType = {
 
 const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner = false, editMode, setEditMode}) => {
     let fName = profile.fullName
+    console.log(profile.contacts)
     return (
         <div>
             <div>{!editMode && isOwner && <button onClick={() => setEditMode(true)}>EditMode</button>}</div>

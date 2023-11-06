@@ -13,6 +13,7 @@ export const TextField = <T extends ElementType = 'input'>(props: textFieldProps
     keyof textFieldPropsType<T>>) => {
     const Component = props.as || 'input'
     const {
+
         placeholder,
         errorMessage,
         label,
@@ -25,7 +26,7 @@ export const TextField = <T extends ElementType = 'input'>(props: textFieldProps
     return (
         <>
             <label>
-
+                {label}
                 <Component
                     placeholder={placeholder}
                     onChange={onChange}

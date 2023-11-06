@@ -1,11 +1,15 @@
 import React, {FC} from "react";
 import {propsProfileType} from "../../../../Redux/profile-reducer";
 import {ControlledTextField} from "../../../FormHelpers/textField/ControlTextField";
-import {Controller, useFieldArray, useForm} from "react-hook-form";
+import {
+    FormProvider,
+    useForm,
+} from "react-hook-form";
 import {z} from 'zod'
 import {zodResolver} from "@hookform/resolvers/zod";
 import {ControlledCheckbox} from "../../../FormHelpers/checkBox/ControlCheckBox";
 import s from './ProfileDataForm.module.scss'
+
 
 type ProfileDataFormType = {
     profile: propsProfileType
@@ -17,9 +21,9 @@ type FormValues = {
     lookingForAJob: boolean
     lookingForAJobDescription: string
     aboutMe: string
-    github: string
-    vk: string
     contacts?: {
+        github: string
+        vk: string
         facebook: string
         instagram: string
         twitter: string
@@ -28,40 +32,37 @@ type FormValues = {
         mainLink: string
     }
 }
+
+
 const schema = z.object({
     fullName: z.string().min(6),
     lookingForAJob: z.boolean().optional(),
     lookingForAJobDescription: z.string().min(6),
-    aboutMe: z.string().min(6),
+    aboutMe: z.string().min(6)
 })
 
 // type FormValues = z.input<typeof schema>
 export const ProfileDataForm: FC<ProfileDataFormType> = ({profile, saveProfile, setEditMode}) => {
-    const {
-        register,
-        handleSubmit,
-        control,
-    } = useForm<FormValues>({
+    const methods = useForm<FormValues>({
         resolver: zodResolver(schema),
         defaultValues: {
             fullName: profile.fullName,
             lookingForAJob: profile.lookingForAJob,
             lookingForAJobDescription: profile.lookingForAJobDescription,
-            aboutMe: profile.aboutMe,
+            aboutMe: profile.aboutMe
         },
     })
-    const { fields } = useFieldArray({
-        control,
-        name: "contacts"
-    });
+    const {control, handleSubmit, reset} = methods
+    const onSubmit = (data: any) => {
 
-    const onSubmit = (data: FormValues) => {
         saveProfile({...data}, setEditMode)
         setEditMode(false)
     }
 
-    return <form onSubmit={handleSubmit(onSubmit)}>
-        <button type={'submit'}>Submit
+
+
+    return <FormProvider {...methods}>
+        <button onClick={handleSubmit(onSubmit)}>Submit
         </button>
         <div className={s.name}>
             <h3 className={s.field}>Имя пользователя:</h3> <ControlledTextField control={control}
@@ -86,20 +87,12 @@ export const ProfileDataForm: FC<ProfileDataFormType> = ({profile, saveProfile, 
 
         <div>
             <b>Contacts:</b>
-            {fields.map((field, index)=>{
-                <Controller
-                    as={<input />}
-                    name={`contacts.${index}`}
-                    control={control}
-                />
-        })}
+
+            {profile.contacts && Object.keys(profile.contacts).map((field) => {
+                // @ts-ignore
+                return <div style={{margin:'10px'}} ><ControlledTextField style={{display:'flex', justifyContent:'space-around'}} label={field+":"} value={profile.contacts[field]} control={control} name={'contacts.'+field}/></div>
+
+            })}
         </div>
-    </form>
+    </FormProvider>
 }
-
-const contactSchema = z.object({
-    contact: z.string().min(6),
-})
-
-type contactValues = z.input<typeof contactSchema>
-
