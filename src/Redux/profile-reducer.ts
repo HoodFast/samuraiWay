@@ -3,6 +3,7 @@ import {postType} from "App";
 import {profileAPI} from "api/api";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
+import {setErrorMap} from "zod";
 
 
 const ADD_POST = 'ADD-POST'
@@ -147,14 +148,17 @@ export const savePhoto = (photos: photosType): profileThunkType => {
         }
     }
 }
-export const saveProfile = (profile: propsProfileType): profileThunkType => {
+export const saveProfile = (profile: propsProfileType, setError): profileThunkType => {
     return async (dispatch, getState) => {
 
         const res = await profileAPI.saveProfile(profile)
+        console.log(res)
         const userId = getState().auth.id
         if (res.data.resultCode === 0) {
             userId && dispatch(getProfile(userId))
-            dispatch(setEditMode(false))
+
+        } else {
+            setError('form', {message: res.data.messages[0]})
         }
     }
 }

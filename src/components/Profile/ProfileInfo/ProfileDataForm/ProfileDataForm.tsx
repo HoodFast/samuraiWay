@@ -11,6 +11,8 @@ import {ControlledCheckbox} from "../../../FormHelpers/checkBox/ControlCheckBox"
 import s from './ProfileDataForm.module.scss'
 
 
+
+
 type ProfileDataFormType = {
     profile: propsProfileType
     saveProfile: (profile: propsProfileType, setEditMode) => void
@@ -39,14 +41,16 @@ const schema = z.object({
     lookingForAJob: z.boolean().optional(),
     lookingForAJobDescription: z.string().min(6),
     aboutMe: z.string().min(6),
-    contacts:z.object({github: z.string().optional(),
+    contacts: z.object({
+        github: z.string().optional(),
         vk: z.string().optional(),
         facebook: z.string().optional(),
         instagram: z.string().optional(),
         twitter: z.string().optional(),
         website: z.string().optional(),
         youtube: z.string().optional(),
-        mainLink: z.string().optional()})
+        mainLink: z.string().optional()
+    })
 })
 
 // type FormValues = z.input<typeof schema>
@@ -57,21 +61,23 @@ export const ProfileDataForm: FC<ProfileDataFormType> = ({profile, saveProfile, 
             fullName: profile.fullName,
             lookingForAJob: profile.lookingForAJob,
             lookingForAJobDescription: profile.lookingForAJobDescription,
-            aboutMe: profile.aboutMe
+            aboutMe: profile.aboutMe,
+            contacts: profile.contacts
         },
     })
-    const {control, handleSubmit, reset} = methods
+    const {control, handleSubmit,formState,setError} = methods
     const onSubmit = (data: any) => {
-        console.log(data)
-        saveProfile({...data}, setEditMode)
-        setEditMode(false)
-    }
 
+        saveProfile({...data},setError)
+        // setEditMode(false)
+    }
+    // @ts-ignore
 
 
     return <FormProvider {...methods}>
         <button onClick={handleSubmit(onSubmit)}>Submit
         </button>
+        {formState.errors.root &&  <div>{formState.errors.root.type}</div>}
         <div className={s.name}>
             <h3 className={s.field}>Имя пользователя:</h3> <ControlledTextField control={control}
                                                                                 name={'fullName'}/>
@@ -98,7 +104,7 @@ export const ProfileDataForm: FC<ProfileDataFormType> = ({profile, saveProfile, 
 
             {profile.contacts && Object.keys(profile.contacts).map((field) => {
                 // @ts-ignore
-                return <div style={{margin:'10px'}} ><ControlledTextField style={{display:'flex', justifyContent:'space-around'}} label={field+":"} defaultValue={profile.contacts[field]} control={control} name={'contacts.'+field}/></div>
+                return <div style={{margin: '10px'}}><ControlledTextField style={{display: 'flex', justifyContent: 'space-around'}} label={field + ":"} defaultValue={profile.contacts[field]} control={control} name={'contacts.' + field}/></div>
 
             })}
         </div>
