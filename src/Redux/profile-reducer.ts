@@ -152,13 +152,12 @@ export const saveProfile = (profile: propsProfileType, setError): profileThunkTy
     return async (dispatch, getState) => {
 
         const res = await profileAPI.saveProfile(profile)
-        console.log(res)
         const userId = getState().auth.id
         if (res.data.resultCode === 0) {
             userId && dispatch(getProfile(userId))
-
+            dispatch(setEditMode(false))
         } else {
-            setError('form', {message: res.data.messages[0]})
+            setError('root', {type: 'errors', message: res.data.messages[0]})
         }
     }
 }

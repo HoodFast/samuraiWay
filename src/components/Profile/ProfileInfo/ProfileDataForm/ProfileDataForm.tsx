@@ -69,7 +69,7 @@ export const ProfileDataForm: FC<ProfileDataFormType> = ({profile, saveProfile, 
     const onSubmit = (data: any) => {
 
         saveProfile({...data},setError)
-        // setEditMode(false)
+
     }
     // @ts-ignore
 
@@ -77,7 +77,7 @@ export const ProfileDataForm: FC<ProfileDataFormType> = ({profile, saveProfile, 
     return <FormProvider {...methods}>
         <button onClick={handleSubmit(onSubmit)}>Submit
         </button>
-        {formState.errors.root &&  <div>{formState.errors.root.type}</div>}
+        {formState.errors.root &&  <div>{formState.errors.root.message}</div>}
         <div className={s.name}>
             <h3 className={s.field}>Имя пользователя:</h3> <ControlledTextField control={control}
                                                                                 name={'fullName'}/>
@@ -104,7 +104,7 @@ export const ProfileDataForm: FC<ProfileDataFormType> = ({profile, saveProfile, 
 
             {profile.contacts && Object.keys(profile.contacts).map((field) => {
                 // @ts-ignore
-                return <div style={{margin: '10px'}}><ControlledTextField style={{display: 'flex', justifyContent: 'space-around'}} label={field + ":"} defaultValue={profile.contacts[field]} control={control} name={'contacts.' + field}/></div>
+                return <div key={field} style={{margin: '10px'}}><ControlledTextField style={{display: 'flex', justifyContent: 'space-around'}} label={field + ":"} defaultValue={profile.contacts[field]} control={control} name={'contacts.' + field}/></div>
 
             })}
         </div>

@@ -7,8 +7,9 @@ import {LoginForm} from "./LoginForm/LoginForm";
 
 
 type LoginPropsType = {
+    captchaUrl:string|null
     isAuth:boolean
-    login: (email:string,password:string, checked:boolean,setFieldValue )=>void
+    login: (email:string,password:string, checked:boolean,captcha:string,setFieldValue )=>void
 }
 
 
@@ -16,7 +17,7 @@ export const Login = (props:LoginPropsType) => {
 
 
     const onSubmit = (form, setFieldValue) => {
-        props.login(form.email,form.password,!!form.checked,setFieldValue)
+        props.login(form.email,form.password,!!form.checked,form.captcha,setFieldValue)
 
     }
 
@@ -26,7 +27,7 @@ export const Login = (props:LoginPropsType) => {
     return (
         <div>
             <h1>Signup</h1>
-            <LoginForm onSubmit={onSubmit}/>
+            <LoginForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/>
         </div>
 
 
@@ -35,6 +36,7 @@ export const Login = (props:LoginPropsType) => {
 
 const mapStateToProps=(state: AppStateType)=>{
     return{
+        captchaUrl:state.auth.captchaUrl,
         isAuth:state.auth.isAuth
     }
 }

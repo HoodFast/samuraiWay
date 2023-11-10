@@ -15,7 +15,7 @@ export type authType = {
     email: string
     password: string
     rememberMe: boolean
-    captcha: boolean
+    captcha: string
 }
 type PhotosType={
     small:string
@@ -84,4 +84,10 @@ export const meAPI = {
     logout(){
         return instance.delete('/auth/login/')
     }
+}
+
+export const securityAPI = {
+    getCaptchaUrl() {
+        return instance.get(`security/get-captcha-url`)
+        }
 }
