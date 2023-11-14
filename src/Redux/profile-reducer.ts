@@ -3,7 +3,7 @@ import {postType} from "App";
 import {profileAPI} from "api/api";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
-import {setErrorMap} from "zod";
+import {setErrorMessage, setErrorMessageType} from "./app-reducer";
 
 
 const ADD_POST = 'ADD-POST'
@@ -93,6 +93,7 @@ type mainType =
     | removePostType
     | updatePhotoType
     | setEditModeType
+    |  setErrorMessageType
 
 type addPostActionCreatorType = ReturnType<typeof addPost>
 type setUserProfileType = ReturnType<typeof setUserProfile>
@@ -132,10 +133,22 @@ export const getStatus = (profileId: number): profileThunkType => {
 
 export const updateStatus = (status: string): profileThunkType => {
     return async (dispatch) => {
-        const res = await profileAPI.updateStatus(status)
-        if (res.data.resultCode === 0) {
-            dispatch(setStatus(status))
+        try{
+            const res = await profileAPI.updateStatus(status)
+
+            if (res.data.resultCode === 0) {
+                dispatch(setStatus(status))
+            }
+            dispatch(setErrorMessage('server error'))
+            setTimeout(()=>{
+                dispatch(setErrorMessage(''))
+            },1000)
+
+        } catch (error) {
+            dispatch(setErrorMessage('server error'))
+
         }
+
     }
 }
 
