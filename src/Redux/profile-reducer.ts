@@ -139,11 +139,6 @@ export const updateStatus = (status: string): profileThunkType => {
             if (res.data.resultCode === 0) {
                 dispatch(setStatus(status))
             }
-            dispatch(setErrorMessage('server error'))
-            setTimeout(()=>{
-                dispatch(setErrorMessage(''))
-            },1000)
-
         } catch (error) {
             dispatch(setErrorMessage('server error'))
 
